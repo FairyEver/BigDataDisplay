@@ -1,19 +1,25 @@
 <template>
   <div id="screen">
     <div class="col">
-      <item class="item">1</item>
-      <item class="item">2</item>
-      <item class="item">3</item>
+      <item class="item"><slot name="l1"></slot></item>
+      <item class="item"><slot name="l2"></slot></item>
+      <item class="item"><slot name="l3"></slot></item>
     </div>
     <div class="col" :style="centerStyle">
-      <item class="item" :height="100">Title</item>
-      <item class="item">1</item>
-      <item class="item" :height="200">2</item>
+      <item class="item" :height="60">
+        <slot name="c1"></slot>
+      </item>
+      <item class="item">
+        <slot name="c2"></slot>
+      </item>
+      <item class="item" :height="200">
+        <slot name="c3"></slot>
+      </item>
     </div>
     <div class="col">
-      <item class="item">1</item>
-      <item class="item">2</item>
-      <item class="item">3</item>
+      <item class="item"><slot name="r1"></slot></item>
+      <item class="item"><slot name="r2"></slot></item>
+      <item class="item"><slot name="r3"></slot></item>
     </div>
   </div>
 </template>
@@ -26,7 +32,7 @@ export default {
   },
   props: {
     centerWidth: {
-      default: 500
+      default: 600
     }
   },
   computed: {
@@ -41,8 +47,8 @@ export default {
 
 <style lang="scss" scoped>
 #screen{
-  height: calc(100vh - 20px);
-  width: calc(100vw - 20px);
+  height: calc(100vh - 10px);
+  width: calc(100vw - 10px);
   max-height: 1080px;
   max-width: 1920px;
   display: flex;
@@ -53,7 +59,6 @@ export default {
     display: flex;
     flex-direction: column;
     .item{
-      // transition: all .3s cubic-bezier(.55,0,.1,1);
       display: flex;
       justify-content: center;
       align-items: center;
