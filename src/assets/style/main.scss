@@ -1,3 +1,15 @@
 body{
   margin: 0px;
 }
+
+.scale-enter-active,.scale-leave-active{
+  transition:all .3s
+}
+.scale-enter{
+  opacity:0;
+  transform:scale(1.5);
+}
+.scale-leave-active{
+  opacity:0;
+  transform:scale(0.8);
+}

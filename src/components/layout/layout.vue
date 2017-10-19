@@ -1,25 +1,28 @@
 <template>
   <div id="screen">
     <div class="col">
-      <item class="item"><slot name="l1"></slot></item>
-      <item class="item"><slot name="l2"></slot></item>
-      <item class="item"><slot name="l3"></slot></item>
+      <item class="item hov" ref="l1"><slot name="l1"></slot></item>
+      <item class="item hov" ref="l2"><slot name="l2"></slot></item>
+      <item class="item hov" ref="l3"><slot name="l3"></slot></item>
     </div>
-    <div class="col" :style="centerStyle">
-      <item class="item" :height="60">
+    <div class="col center" :style="centerStyle">
+      <item class="item" ref="c1" :height="heightC1">
         <slot name="c1"></slot>
       </item>
-      <item class="item">
+      <item class="item" ref="c2" :height="heightC2">
         <slot name="c2"></slot>
       </item>
-      <item class="item" :height="200">
+      <item class="item hov" ref="c3">
         <slot name="c3"></slot>
+      </item>
+      <item class="item hov" ref="c4" :height="heightC4">
+        <slot name="c4"></slot>
       </item>
     </div>
     <div class="col">
-      <item class="item"><slot name="r1"></slot></item>
-      <item class="item"><slot name="r2"></slot></item>
-      <item class="item"><slot name="r3"></slot></item>
+      <item class="item hov" ref="r1"><slot name="r1"></slot></item>
+      <item class="item hov" ref="r2"><slot name="r2"></slot></item>
+      <item class="item hov" ref="r3"><slot name="r3"></slot></item>
     </div>
   </div>
 </template>
@@ -31,8 +34,16 @@ export default {
     item
   },
   props: {
-    centerWidth: {
-      default: 600
+    centerWidth: { default: 800 },
+    heightC1: { default: 100 },
+    heightC2: { default: 50 },
+    heightC4: { default: 200 },
+    offsetSize: { default: () => {} }
+  },
+  data () {
+    return {
+      screenWidth: document.body.clientWidth,
+      screenHeight: document.body.clientHeight
     }
   },
   computed: {
@@ -40,6 +51,36 @@ export default {
       return {
         width: this.centerWidth + 'px'
       }
+    }
+  },
+  mounted () {
+    this.updateSize()
+    const _this = this
+    let timer = false
+    window.onresize = () => {
+      if (timer) {
+        return false
+      } else {
+        timer = true
+        setTimeout(() => {
+          _this.screenWidth = document.body.clientWidth
+          _this.screenHeight = document.body.clientHeight
+          _this.updateSize()
+          timer = false
+        }, 1000)
+      }
+    }
+  },
+  methods: {
+    updateSize () {
+      let res = {}
+      for (var key of Object.keys(this.$refs)) {
+        res[key] = {
+          height: this.$refs[key].$el.offsetHeight,
+          width: this.$refs[key].$el.offsetWidth
+        }
+      }
+      this.$emit('update:offsetSize', res)
     }
   }
 }
@@ -58,14 +99,19 @@ export default {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    &.center{
+      flex-grow: 0;
+    }
     .item{
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 2px;
-      &:hover{
-        background-color: rgba(#FFF,0.03);
-        box-shadow: 0px 0px 0px 1px rgba(#FFF,0.2);
+      &.hov{
+        &:hover{
+          background-color: rgba(#FFF,0.01);
+          box-shadow: 0px 0px 0px 1px rgba(#FFF,0.04);
+        }  
       }
     }
   }
