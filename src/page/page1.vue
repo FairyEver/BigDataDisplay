@@ -11,14 +11,14 @@
     </template>
     <template slot="l2">
       <pie
-        name="全国排名1"
+        name="全国存栏区间分布"
         :ready="layoutReady"
         :size="offsetSize.l2">
       </pie>
     </template>
     <template slot="l3">
       <pie
-        name="全国排名1"
+        name="全国品种占比"
         :ready="layoutReady"
         :size="offsetSize.l2">
       </pie>

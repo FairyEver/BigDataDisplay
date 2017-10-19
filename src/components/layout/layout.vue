@@ -35,9 +35,9 @@ export default {
   },
   props: {
     centerWidth: { default: 800 },
-    heightC1: { default: 100 },
-    heightC2: { default: 50 },
-    heightC4: { default: 200 },
+    heightC1: { default: 60 },
+    heightC2: { default: 40 },
+    heightC4: { default: 100 },
     offsetSize: { default: () => {} }
   },
   data () {
@@ -88,8 +88,8 @@ export default {
 
 <style lang="scss" scoped>
 #screen{
-  height: calc(100vh - 10px);
-  width: calc(100vw - 10px);
+  height: calc(100vh - 40px);
+  width: calc(100vw - 40px);
   max-height: 1080px;
   max-width: 1920px;
   display: flex;
