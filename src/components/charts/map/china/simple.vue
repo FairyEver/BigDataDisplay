@@ -49,7 +49,7 @@ export default {
     }
   },
   mounted () {
-    console.log(`map/china/simple [${this.name}] [waiting size props ...]`)
+    console.log(`map/china/simple [${this.name}] [等待尺寸数据 ...]`)
   },
   methods: {
     dispose () {
@@ -120,6 +120,10 @@ export default {
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
         this.chart.setOption(option)
+        let _this = this
+        this.chart.on('click', function (params) {
+          _this.$emit('check', params)
+        })
         console.log(`map/china/simple [${this.name}] [图表实例化完毕]`)
       })
     }

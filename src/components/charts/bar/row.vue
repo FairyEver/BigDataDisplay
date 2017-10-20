@@ -35,12 +35,12 @@ export default {
   watch: {
     ready (value) {
       if (value) {
-        console.log(`map/china/simple [${this.name}] [ready]`)
+        console.log(`bar/row [${this.name}] [ready]`)
         this.init()
       }
     },
     size (value) {
-      console.log(`map/china/simple [${this.name}] [组件尺寸变化 ${value.height}*${value.width}]`)
+      console.log(`bar/row [${this.name}] [组件尺寸变化 ${value.height}*${value.width}]`)
       if (this.chart === null) {
         return
       }
@@ -49,13 +49,13 @@ export default {
     }
   },
   mounted () {
-    console.log(`map/china/simple [${this.name}] [waiting size props ...]`)
+    console.log(`bar/row [${this.name}] [等待尺寸数据 ...]`)
   },
   methods: {
     dispose () {
       // 销毁
       this.chart.dispose()
-      console.log(`map/china/simple [${this.name}] [实例销毁]`)
+      console.log(`bar/row [${this.name}] [实例销毁]`)
     },
     init () {
       let option = {
@@ -135,7 +135,7 @@ export default {
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
         this.chart.setOption(option)
-        console.log(`map/china/simple [${this.name}] [图表实例化完毕]`)
+        console.log(`bar/row [${this.name}] [图表实例化完毕]`)
       })
     }
   }

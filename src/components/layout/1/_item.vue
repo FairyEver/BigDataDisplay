@@ -1,5 +1,5 @@
 <template>
-  <div :style="style">
+  <div class="item" :style="style">
     <slot></slot>
   </div>
 </template>
@@ -22,4 +22,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.item{
+  cursor: pointer;
+}
+</style>
 

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import item from './item'
+import item from './_item'
 export default {
   components: {
     item
