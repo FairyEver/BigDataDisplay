@@ -1,6 +1,9 @@
 <template>
   <div class="item">
-    <p class="text label" :style="style">{{label}}</p>
+    <p class="text label" :style="style">
+      <span :style="styleBG"></span>
+      {{label}}
+    </p>
     <p class="text value" :style="style" ref="count"></p>
   </div>
 </template>
@@ -18,10 +21,22 @@ export default {
       counterObj: null
     }
   },
+  watch: {
+    value (value) {
+      if (this.counterObj !== null) {
+        this.counterObj.update(value)
+      }
+    }
+  },
   computed: {
     style () {
       return {
         color: this.color
+      }
+    },
+    styleBG () {
+      return {
+        backgroundColor: this.color
       }
     }
   },
@@ -37,7 +52,7 @@ export default {
         separator: ',',
         decimal: '.'
       }
-      this.counterObj = new Counter(this.$refs.count, 0, this.value, 0, 2, options)
+      this.counterObj = new Counter(this.$refs.count, 0, this.value, 0, 1, options)
     },
     start () {
       if (!this.counterObj.error) {
@@ -59,6 +74,12 @@ export default {
     margin: 0px;
     text-align: center;
     display: block;
+    span{
+      display: inline-block;
+      height: 10px;
+      width: 10px;
+      border-radius: 5px;
+    }
     &.label{
       font-size: 14px;
       line-height: 20px;

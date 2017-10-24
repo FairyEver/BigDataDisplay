@@ -15,6 +15,8 @@
       <!-- 中间 -->
       <div class="col center" :style="colStyle(1)">
         <div ref="c1" class="item map">
+          <slot name="c1"></slot>
+          <!-- 顶部的导航 -->
           <div class="nav">
             <div
               v-for="item in nav"
@@ -25,7 +27,16 @@
               {{item.label}}
             </div>
           </div>
-          <slot name="c1"></slot>
+          <div v-if="dataNav.length > 0" class="dataNav">
+            <div
+              v-for="item in dataNav"
+              :key="item.value"
+              class="dataNav-item"
+              :class="{ active: item.value === dataNavActive }"
+              @click="dataNavClick(item.value)">
+              {{item.label}}
+            </div>
+          </div>
         </div>
         <div ref="c2" class="item hov" :style="infoStyle">
           <slot name="c2"></slot>
@@ -46,6 +57,7 @@ export default {
   props: {
     // 计算后的每个区域尺寸
     offsetSize: { default: () => {} },
+    layoutReady: { default: false },
     // 最外层的设置数据
     margin: { default: 20 },
     heightMax: { default: 1080 },
@@ -64,6 +76,11 @@ export default {
         { label: 'label1', value: 1 },
         { label: 'label2', value: 2 }
       ]
+    },
+    // 数据导航
+    dataNavActive: { default: 0 },
+    dataNav: {
+      default: () => []
     }
   },
   data () {
@@ -116,6 +133,7 @@ export default {
         return false
       } else {
         timer = true
+        this.$emit('update:layoutReady', false)
         setTimeout(() => {
           _this.screenWidth = document.body.clientWidth
           _this.screenHeight = document.body.clientHeight
@@ -136,6 +154,10 @@ export default {
       // 点击导航按钮
       this.$emit('update:navActive', value)
     },
+    dataNavClick (value) {
+      // 点击数据导航按钮
+      this.$emit('update:dataNavActive', value)
+    },
     updateSize () {
       // 更新尺寸
       let res = {}
@@ -146,6 +168,7 @@ export default {
         }
       }
       this.$emit('update:offsetSize', res)
+      this.$emit('update:layoutReady', true)
     }
   }
 }
@@ -207,6 +230,27 @@ export default {
               }
               &:nth-child(2){
                 border-top-right-radius: 2px;
+                border-bottom-right-radius: 2px;
+              }
+              &.active{
+                background-color: #40B08E;
+              }
+            }
+          }
+          .dataNav{
+            position: absolute;
+            right: 0px;
+            .dataNav-item{
+              line-height: 36px;
+              min-width: 80px;
+              text-align: center;
+              background-color: #32363F;
+              &:first-child{
+                border-top-left-radius: 2px;
+                border-top-right-radius: 2px;
+              }
+              &:last-child{
+                border-bottom-left-radius: 2px;
                 border-bottom-right-radius: 2px;
               }
               &.active{
