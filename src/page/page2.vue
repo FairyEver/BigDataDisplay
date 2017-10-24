@@ -1,22 +1,8 @@
 <template>
   <layout
     :nav="nav"
-    :nav-active.sync="navActive"
-    :offset-size.sync="offsetSize">
-
+    :nav-active.sync="navActive">
     <template slot="title">行情大数据展示</template>
-
-    <template slot="l1">{{offsetSize.l1}}</template>
-    <template slot="l2">{{offsetSize.l2}}</template>
-    <template slot="l3">{{offsetSize.l3}}</template>
-
-    <template slot="c1">{{offsetSize.c1}}</template>
-    <template slot="c2">{{offsetSize.c2}}</template>
-
-    <template slot="r1">{{offsetSize.r1}}</template>
-    <template slot="r2">{{offsetSize.r2}}</template>
-    <template slot="r3">{{offsetSize.r3}}</template>
-
   </layout>
 </template>
 
@@ -30,10 +16,8 @@ export default {
   },
   data () {
     return {
-      // 布局尺寸
-      offsetSize: {},
       // 导航栏
-      navActive: 'page1',
+      navActive: 'page2',
       nav: [
         { label: '蛋鸡存栏', value: 'page1' },
         { label: '养殖户分布', value: 'page2' }

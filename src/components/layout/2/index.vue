@@ -1,16 +1,20 @@
 <template>
   <div id="screen" :style="screenStyle">
+    <!-- 标题 -->
     <div class="row title" :style="titleStyle">
       <slot name="title">标题插槽</slot>
     </div>
+    <!-- 主体区域 -->
     <div class="row content">
+      <!-- 左侧 -->
       <div class="col left" :style="colStyle(0)">
-        <div class="item hov" :style="itemStyle">item</div>
-        <div class="item hov" :style="itemStyle">item</div>
-        <div class="item hov" :style="itemStyle">item</div>
+        <div ref="l1" class="item hov" :style="itemStyle"><slot name="l1"></slot></div>
+        <div ref="l2" class="item hov" :style="itemStyle"><slot name="l2"></slot></div>
+        <div ref="l3" class="item hov" :style="itemStyle"><slot name="l3"></slot></div>
       </div>
+      <!-- 中间 -->
       <div class="col center" :style="colStyle(1)">
-        <div class="item map">
+        <div ref="c1" class="item map">
           <div class="nav">
             <div
               v-for="item in nav"
@@ -21,13 +25,17 @@
               {{item.label}}
             </div>
           </div>
+          <slot name="c1"></slot>
         </div>
-        <div class="item hov" :style="infoStyle">item</div>
+        <div ref="c2" class="item hov" :style="infoStyle">
+          <slot name="c2"></slot>
+        </div>
       </div>
+      <!-- 右侧 -->
       <div class="col right" :style="colStyle(2)">
-        <div class="item hov" :style="itemStyle">item</div>
-        <div class="item hov" :style="itemStyle">item</div>
-        <div class="item hov" :style="itemStyle">item</div>
+        <div ref="r1" class="item hov" :style="itemStyle"><slot name="r1"></slot></div>
+        <div ref="r2" class="item hov" :style="itemStyle"><slot name="r2"></slot></div>
+        <div ref="r3" class="item hov" :style="itemStyle"><slot name="r3"></slot></div>
       </div>
     </div>
   </div>
@@ -36,6 +44,8 @@
 <script>
 export default {
   props: {
+    // 计算后的每个区域尺寸
+    offsetSize: { default: () => {} },
     // 最外层的设置数据
     margin: { default: 20 },
     heightMax: { default: 1080 },
@@ -54,6 +64,12 @@ export default {
         { label: 'label1', value: 1 },
         { label: 'label2', value: 2 }
       ]
+    }
+  },
+  data () {
+    return {
+      screenWidth: document.body.clientWidth,
+      screenHeight: document.body.clientHeight
     }
   },
   computed: {
@@ -91,6 +107,24 @@ export default {
       }
     }
   },
+  mounted () {
+    this.updateSize()
+    const _this = this
+    let timer = false
+    window.onresize = () => {
+      if (timer) {
+        return false
+      } else {
+        timer = true
+        setTimeout(() => {
+          _this.screenWidth = document.body.clientWidth
+          _this.screenHeight = document.body.clientHeight
+          _this.updateSize()
+          timer = false
+        }, 1000)
+      }
+    }
+  },
   methods: {
     colStyle (index) {
       // 列的样式 传入id 返回设置的百分比
@@ -99,7 +133,19 @@ export default {
       }
     },
     navClick (value) {
+      // 点击导航按钮
       this.$emit('update:navActive', value)
+    },
+    updateSize () {
+      // 更新尺寸
+      let res = {}
+      for (var key of Object.keys(this.$refs)) {
+        res[key] = {
+          height: this.$refs[key].offsetHeight,
+          width: this.$refs[key].offsetWidth
+        }
+      }
+      this.$emit('update:offsetSize', res)
     }
   }
 }
@@ -134,6 +180,10 @@ export default {
         margin-bottom: 0px;
         flex-grow: 1;
         border-radius: 2px;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         &.map{
           position: relative;
           .nav{
