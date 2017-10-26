@@ -20,45 +20,8 @@ export default {
   },
   data () {
     return {
-      chart: null
-    }
-  },
-  computed: {
-    style () {
-      return {
-        height: this.size.height + 'px',
-        width: this.size.width + 'px'
-      }
-    }
-  },
-  watch: {
-    ready (value) {
-      if (value) {
-        console.log(`map/china/simple [${this.name}] [ready]`)
-        this.init()
-      }
-    },
-    size (value) {
-      console.log(`map/china/simple [${this.name}] [组件尺寸变化 ${value.height}*${value.width}]`)
-      if (this.chart === null) {
-        return
-      }
-      this.dispose()
-      this.init()
-    }
-  },
-  mounted () {
-    console.log(`map/china/simple [${this.name}] [等待尺寸数据 ...]`)
-  },
-  methods: {
-    dispose () {
-      // 销毁
-      this.chart.dispose()
-      console.log(`map/china/simple [${this.name}] [实例销毁]`)
-    },
-    init () {
-      // 初始化
-      let option = {
+      chart: null,
+      option: {
         title: {
           text: '全国数据',
           x: 'center'
@@ -112,18 +75,67 @@ export default {
                 borderColor: '#52D7E9'
               }
             },
-            data: this.data
+            data: []
           }
         ]
       }
+    }
+  },
+  computed: {
+    style () {
+      return {
+        height: this.size.height + 'px',
+        width: this.size.width + 'px'
+      }
+    }
+  },
+  watch: {
+    ready (value) {
+      if (value) {
+        console.log(`map/china/simple [${this.name}] [ready]`)
+        this.init()
+      }
+    },
+    size (value) {
+      console.log(`map/china/simple [${this.name}] [组件尺寸变化 ${value.height}*${value.width}]`)
+      if (this.chart === null) {
+        return
+      }
+      this.dispose()
+      this.init()
+    },
+    data (value, oldValue) {
+      console.log(`map/china/simple [${this.name}] [检测到了数据更新]`)
+      this.refresh()
+    }
+  },
+  mounted () {
+    console.log(`map/china/simple [${this.name}] [等待尺寸数据 ...]`)
+  },
+  methods: {
+    dispose () {
+      // 销毁
+      this.chart.dispose()
+      console.log(`map/china/simple [${this.name}] [实例销毁]`)
+    },
+    init () {
+      // 初始化
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
-        this.chart.setOption(option)
+        this.option.series[0].data = this.data
+        this.chart.setOption(this.option)
         let _this = this
         this.chart.on('click', function (params) {
           _this.$emit('check', params)
         })
         console.log(`map/china/simple [${this.name}] [图表实例化完毕]`)
+      })
+    },
+    refresh () {
+      // 更新
+      this.$nextTick(() => {
+        this.option.series[0].data = this.data
+        this.chart.setOption(this.option)
       })
     }
   }

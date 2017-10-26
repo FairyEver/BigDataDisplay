@@ -81,12 +81,13 @@ export default {
       border-radius: 5px;
     }
     &.label{
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 16px;
+      line-height: 16px;
+      margin-bottom: 10px;
       opacity: .6;
     }
     &.value{
-      font-size: 36px;
+      font-size: 42px;
       line-height: 40px;
     }
   }

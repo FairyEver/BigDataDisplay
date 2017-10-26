@@ -1,15 +1,15 @@
 <template>
-  <div ref="chart" :style="style"></div>
+  <div ref='chart' :style="style"></div>
 </template>
 
 <script>
 import echarts from '@/plugins/echarts.js'
 export default {
-  name: 'HelloWorld',
   props: {
     name: { default: '未命名图表' },
-    data: { default: () => {} },
+    data: { default: () => [] },
     ready: { default: false },
+    colorTitle: { default: '#FFF' },
     size: {
       default: () => {
         return {
@@ -21,7 +21,64 @@ export default {
   },
   data () {
     return {
-      chart: null
+      chart: null,
+      option: {
+        title: {
+          text: this.name,
+          x: 'center',
+          top: 5,
+          textStyle: {
+            fontSize: 12,
+            color: this.colorTitle
+          }
+        },
+        color: [
+          '#f7d09c',
+          '#9c62e4',
+          '#db5c5e',
+          '#5ea2db',
+          '#55be9d',
+          '#da9664'
+        ],
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}<br/>数量: {c}<br/>占比: {d}%'
+        },
+        series: [
+          {
+            name: '占比',
+            type: 'pie',
+            center: ['50%', '55%'],
+            radius: ['15%', '50%'],
+            avoidLabelOverlap: true,
+            itemStyle: {
+              normal: {
+                borderColor: '#171F29',
+                borderWidth: 4
+              }
+            },
+            label: {
+              normal: {
+                show: true,
+                formatter: '{b}\n{d}%',
+                textStyle: {
+                  fontSize: 12,
+                  color: '#BCC4CE'
+                }
+              },
+              emphasis: {
+                show: true
+              }
+            },
+            labelLine: {
+              normal: {
+                show: true
+              }
+            },
+            data: []
+          }
+        ]
+      }
     }
   },
   computed: {
@@ -46,6 +103,10 @@ export default {
       }
       this.dispose()
       this.init()
+    },
+    data (value, oldValue) {
+      console.log(`pie/type1 [${this.name}] [检测到了数据更新]`)
+      this.refresh()
     }
   },
   mounted () {
@@ -58,60 +119,19 @@ export default {
       console.log(`pie/type1 [${this.name}] [实例销毁]`)
     },
     init () {
-      let option = {
-        title: {
-          text: this.name,
-          textStyle: {
-            color: '#FFF'
-          },
-          x: 'center'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        dataRange: {
-          show: false,
-          color: [
-            '#51F0E0',
-            '#7351F0',
-            '#51F06F',
-            '#51C4F0',
-            '#5451F0',
-            '#B751F0'
-          ]
-        },
-        legend: {
-          show: false
-        },
-        toolbox: {
-          show: false
-        },
-        calculable: true,
-        series: [
-          {
-            name: '面积模式',
-            type: 'pie',
-            radius: [30, 110],
-            center: ['50%', '50%'],
-            roseType: 'area',
-            data: [
-              { value: 10, name: 'rose1' },
-              { value: 5, name: 'rose2' },
-              { value: 15, name: 'rose3' },
-              { value: 25, name: 'rose4' },
-              { value: 20, name: 'rose5' },
-              { value: 35, name: 'rose6' },
-              { value: 30, name: 'rose7' },
-              { value: 40, name: 'rose8' }
-            ]
-          }
-        ]
-      }
+      // 初始化
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
-        this.chart.setOption(option)
+        this.option.series[0].data = this.data
+        this.chart.setOption(this.option)
         console.log(`pie/type1 [${this.name}] [图表实例化完毕]`)
+      })
+    },
+    refresh () {
+      // 更新
+      this.$nextTick(() => {
+        this.option.series[0].data = this.data
+        this.chart.setOption(this.option)
       })
     }
   }

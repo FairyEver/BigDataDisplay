@@ -10,6 +10,7 @@ export default {
     name: { default: '未命名图表' },
     data: { default: () => {} },
     ready: { default: false },
+    colorTitle: { default: '#FFF' },
     size: {
       default: () => {
         return {
@@ -59,76 +60,82 @@ export default {
     },
     init () {
       let option = {
-        tooltip: {
-          formatter: '{b} ({c})'
-        },
-        xAxis: [
-          {
-            gridIndex: 0,
-            axisTick: {
-              show: false
-            },
-            axisLabel: {
-              show: false
-            },
-            splitLine: {
-              show: false
-            },
-            axisLine: {
-              show: false
-            }
+        title: {
+          text: this.name,
+          x: 'center',
+          top: 5,
+          textStyle: {
+            fontSize: 12,
+            color: this.colorTitle
           }
-        ],
-        yAxis: [{
-          gridIndex: 0,
-          interval: 0,
-          data: this.data.yAxisData,
+        },
+        grid: {
+          left: 40,
+          right: 30,
+          top: 50,
+          bottom: 10
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: function (params, ticket, callback) {
+            var res = params.name + ' : ' + params.value
+            return res
+          }
+        },
+        yAxis: {
+          data: this.data.map(e => e.name).reverse(),
+          axisLine: {
+            // 坐标轴
+            lineStyle: {
+              color: '#434B56'
+            }
+          },
           axisTick: {
+            // 刻度
             show: false
           },
           axisLabel: {
-            show: true,
-            textStyle: {
-              fontSize: '8px',
-              color: '#36a8fa'
+            // 坐标文字
+            fontSize: 10,
+            color: '#BCC4CE'
+          }
+        },
+        xAxis: {
+          position: 'top',
+          interval: 500,
+          axisLine: {
+            // 坐标轴
+            lineStyle: {
+              color: '#434B56'
             }
           },
           splitLine: {
+            // 网格区域分割线
+            lineStyle: {
+              color: '#333945'
+            }
+          },
+          axisTick: {
+            // 刻度
             show: false
           },
-          axisLine: {
-            show: false
+          axisLabel: {
+            // 坐标文字
+            fontSize: 10,
+            color: '#BCC4CE'
           }
-
-        }],
+        },
         series: [
           {
             type: 'bar',
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            barWidth: '50%',
+            data: this.data.reverse(),
+            barWidth: 10,
             itemStyle: {
               normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                  offset: 0,
-                  color: '#52D7E9'
-                },
-                {
-                  offset: 0.8,
-                  color: '#51F0E0'
-                }], false)
+                color: '#DD9C38',
+                barBorderRadius: [0, 1, 1, 0]
               }
-            },
-            label: {
-              normal: {
-                show: true,
-                position: 'right',
-                textStyle: {
-                  color: '#6385EE'
-                }
-              }
-            },
-            data: this.data.data
+            }
           }
         ]
       }

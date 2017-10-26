@@ -8,9 +8,9 @@
     <div class="row content">
       <!-- 左侧 -->
       <div class="col left" :style="colStyle(0)">
-        <div ref="l1" class="item hov" :style="itemStyle"><slot name="l1"></slot></div>
-        <div ref="l2" class="item hov" :style="itemStyle"><slot name="l2"></slot></div>
-        <div ref="l3" class="item hov" :style="itemStyle"><slot name="l3"></slot></div>
+        <div ref="l1" class="item hov" :style="itemStyle('L1')"><slot name="l1"></slot></div>
+        <div ref="l2" class="item hov" :style="itemStyle('L2')"><slot name="l2"></slot></div>
+        <div ref="l3" class="item hov" :style="itemStyle('L3')"><slot name="l3"></slot></div>
       </div>
       <!-- 中间 -->
       <div class="col center" :style="colStyle(1)">
@@ -38,15 +38,16 @@
             </div>
           </div>
         </div>
+        <!-- 额外信息区域 -->
         <div ref="c2" class="item hov" :style="infoStyle">
           <slot name="c2"></slot>
         </div>
       </div>
       <!-- 右侧 -->
       <div class="col right" :style="colStyle(2)">
-        <div ref="r1" class="item hov" :style="itemStyle"><slot name="r1"></slot></div>
-        <div ref="r2" class="item hov" :style="itemStyle"><slot name="r2"></slot></div>
-        <div ref="r3" class="item hov" :style="itemStyle"><slot name="r3"></slot></div>
+        <div ref="r1" class="item hov" :style="itemStyle('R1')"><slot name="r1"></slot></div>
+        <div ref="r2" class="item hov" :style="itemStyle('R2')"><slot name="r2"></slot></div>
+        <div ref="r3" class="item hov" :style="itemStyle('R3')"><slot name="r3"></slot></div>
       </div>
     </div>
   </div>
@@ -68,7 +69,14 @@ export default {
       default: () => ['25%', '50%', '25%']
     },
     // 中间底栏的高度
-    heightInfo: { default: 160 },
+    heightInfo: { default: 140 },
+    // 左右两边的卡片高度
+    hItemL1: { default: 'auto' },
+    hItemL2: { default: 'auto' },
+    hItemL3: { default: 'auto' },
+    hItemR1: { default: 'auto' },
+    hItemR2: { default: 'auto' },
+    hItemR3: { default: 'auto' },
     // 导航相关
     navActive: { default: 1 },
     nav: {
@@ -100,12 +108,6 @@ export default {
         fontSize: this.heightTitle - 60 + 'px'
       }
     },
-    itemStyle () {
-      // 卡片的样式
-      return {
-        backgroundColor: '#171F29'
-      }
-    },
     screenStyle () {
       // 最外层容器的样式
       return {
@@ -120,7 +122,7 @@ export default {
       return {
         height: this.heightInfo + 'px',
         flexGrow: 0,
-        ...this.itemStyle
+        ...this.itemStyle()
       }
     }
   },
@@ -144,6 +146,21 @@ export default {
     }
   },
   methods: {
+    itemStyle (name) {
+      // 返回左边和右边卡片的样式
+      let heightStyle = {}
+      if (name) {
+        heightStyle = {
+          height: this['hItem' + name] === 'auto' ? 'auto' : this['hItem' + name] + 'px',
+          flexGrow: this['hItem' + name] === 'auto' ? 1 : 0
+        }
+      }
+      // 卡片的样式
+      return {
+        backgroundColor: '#171F29',
+        ...heightStyle
+      }
+    },
     colStyle (index) {
       // 列的样式 传入id 返回设置的百分比
       return {
@@ -241,7 +258,8 @@ export default {
             position: absolute;
             right: 0px;
             .dataNav-item{
-              line-height: 36px;
+              font-size: 12px;
+              line-height: 30px;
               min-width: 80px;
               text-align: center;
               background-color: #32363F;
