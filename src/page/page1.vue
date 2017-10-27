@@ -45,7 +45,7 @@
         :ready="layoutReady"
         :size="offsetSize.c1"
         :data="dataMapFilted"
-        @check="mapFenbu">
+        @check="mapClick">
       </map-x>
     </template>
     <template slot="c2">
@@ -111,12 +111,6 @@ export default {
       ],
       // 数据 地图
       dataMap,
-      mapInfo: [
-        { label: '产蛋量', value: 0 },
-        { label: '日耗料', value: 0 },
-        { label: '淘汰鸡', value: 0 },
-        { label: '疫苗', value: 0 }
-      ],
       // 数据 top10
       dataTop10,
       // 全国存栏分布
@@ -129,7 +123,18 @@ export default {
   },
   computed: {
     dataMapFilted () {
-      return this.dataMap[this.dataNavActive]
+      // 地图数据
+      return this.dataMap[this.dataNavActive].mapData
+    },
+    mapInfo () {
+      // 中间下部分地图信息 根据地图右侧的控制器切换
+      let mapInfo = this.dataMap[this.dataNavActive].mapInfo
+      return [
+        { label: '产蛋量', value: mapInfo.cd },
+        { label: '日耗料', value: mapInfo.hl },
+        { label: '淘汰鸡', value: mapInfo.tt },
+        { label: '疫苗', value: mapInfo.tm }
+      ]
     }
   },
   watch: {
@@ -141,20 +146,21 @@ export default {
     }
   },
   methods: {
-    mapFenbu (params) {
+    mapClick (params) {
+      console.log(params)
       // 更新地图下面的数据
-      if (params.data && params.data.info) {
-        let info = params.data.info
-        this.mapInfo[0].value = info.cd
-        this.mapInfo[1].value = info.hl
-        this.mapInfo[2].value = info.tt
-        this.mapInfo[3].value = info.ym
-      } else {
-        this.mapInfo[0].value = 0
-        this.mapInfo[1].value = 0
-        this.mapInfo[2].value = 0
-        this.mapInfo[3].value = 0
-      }
+      // if (params.data && params.data.info) {
+      //   let info = params.data.info
+      //   this.mapInfo[0].value = info.cd
+      //   this.mapInfo[1].value = info.hl
+      //   this.mapInfo[2].value = info.tt
+      //   this.mapInfo[3].value = info.ym
+      // } else {
+      //   this.mapInfo[0].value = 0
+      //   this.mapInfo[1].value = 0
+      //   this.mapInfo[2].value = 0
+      //   this.mapInfo[3].value = 0
+      // }
     }
   }
 }

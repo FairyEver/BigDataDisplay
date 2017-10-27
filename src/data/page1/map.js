@@ -33,7 +33,7 @@ let dataBuilder = () => {
       value: Math.round(Math.random() * 50)
     }
   }).map(e => {
-    // 加工 生成地图下面的四个详细信息
+    // 加工 生成地图附加的详细信息
     let _e = e
     e.info = {
       cd: Math.round(Math.random() * 100),
@@ -45,15 +45,48 @@ let dataBuilder = () => {
   })
 }
 
-// let a = dataBuilder()
-// let b = dataBuilder()
-// console.log(a)
-// console.log(b)
-// console.log(a === b)
+// export default {
+//   all: dataBuilder(),
+//   hong: dataBuilder(),
+//   bai: dataBuilder(),
+//   fen: dataBuilder()
+// }
 
 export default {
-  all: dataBuilder(),
-  hong: dataBuilder(),
-  bai: dataBuilder(),
-  fen: dataBuilder()
+  all: {
+    mapInfo: {
+      cd: Math.round(Math.random() * 10000),
+      hl: Math.round(Math.random() * 10000),
+      tt: Math.round(Math.random() * 10000),
+      tm: Math.round(Math.random() * 10000)
+    },
+    mapData: dataBuilder()
+  },
+  hong: {
+    mapInfo: {
+      cd: Math.round(Math.random() * 10000),
+      hl: Math.round(Math.random() * 10000),
+      tt: Math.round(Math.random() * 10000),
+      tm: Math.round(Math.random() * 10000)
+    },
+    mapData: dataBuilder()
+  },
+  bai: {
+    mapInfo: {
+      cd: Math.round(Math.random() * 10000),
+      hl: Math.round(Math.random() * 10000),
+      tt: Math.round(Math.random() * 10000),
+      tm: Math.round(Math.random() * 10000)
+    },
+    mapData: dataBuilder()
+  },
+  fen: {
+    mapInfo: {
+      cd: Math.round(Math.random() * 10000),
+      hl: Math.round(Math.random() * 10000),
+      tt: Math.round(Math.random() * 10000),
+      tm: Math.round(Math.random() * 10000)
+    },
+    mapData: dataBuilder()
+  }
 }

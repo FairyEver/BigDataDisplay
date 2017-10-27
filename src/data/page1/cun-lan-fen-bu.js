@@ -9,11 +9,11 @@ export default [
   },
   {
     name: '2000~3000',
-    value: '4235'
+    value: '14235'
   },
   {
     name: '3000~4000',
-    value: '7237'
+    value: '27237'
   },
   {
     name: '4000~5000',
@@ -21,6 +21,6 @@ export default [
   },
   {
     name: '>5000',
-    value: '1229'
+    value: '41229'
   }
 ]
