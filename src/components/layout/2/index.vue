@@ -135,7 +135,6 @@ export default {
         return false
       } else {
         timer = true
-        this.$emit('update:layoutReady', false)
         setTimeout(() => {
           _this.screenWidth = document.body.clientWidth
           _this.screenHeight = document.body.clientHeight
@@ -184,8 +183,8 @@ export default {
           width: this.$refs[key].offsetWidth
         }
       }
-      this.$emit('update:offsetSize', res)
       this.$emit('update:layoutReady', true)
+      this.$emit('update:offsetSize', res)
     }
   }
 }

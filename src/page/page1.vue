@@ -6,7 +6,8 @@
     :data-nav-active.sync="dataNavActive"
     :offset-size.sync="offsetSize"
     :layout-ready.sync="layoutReady"
-    :h-item-l1="240">
+    :h-item-l1="240"
+    :h-item-r1="240">
 
     <template slot="title">行情大数据展示</template>
 
@@ -52,11 +53,6 @@
     </template>
 
     <template slot="r1">
-      <!-- <pie2
-        name="产蛋率"
-        :ready="layoutReady"
-        :size="offsetSize.r1">
-      </pie2> -->
       <cunlan-info
         :ready="layoutReady"
         :size="offsetSize.r1">
@@ -75,7 +71,6 @@ import mapX from '@/components/charts/map/china/simple.vue'
 import numberX from '@/components/number/index.vue'
 import bar from '@/components/charts/bar/row.vue'
 import pie from '@/components/charts/pie/type1.vue'
-// import pie2 from '@/components/charts/pie/type2.vue'
 import cunlanInfo from '@/components/component/cunlan/cunlan.vue'
 
 // 数据
@@ -92,7 +87,6 @@ export default {
     bar,
     pie,
     cunlanInfo
-    // pie2
   },
   data () {
     return {
@@ -128,7 +122,9 @@ export default {
       // 全国存栏分布
       cunLanFenBu,
       // 全国品种占比
-      pinZhongZhanBi
+      pinZhongZhanBi,
+      // r1区域 每个地区的详细数据
+      cunlanSitao: 0
     }
   },
   computed: {

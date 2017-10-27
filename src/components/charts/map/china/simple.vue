@@ -92,15 +92,18 @@ export default {
   watch: {
     ready (value) {
       if (value) {
-        console.log(`map/china/simple [${this.name}] [ready]`)
+        console.log(`map/china/simple [${this.name}] [watch: ready is ${value}]`)
         this.init()
       }
     },
     size (value) {
-      console.log(`map/china/simple [${this.name}] [组件尺寸变化 ${value.height}*${value.width}]`)
+      if (!this.ready) {
+        return
+      }
       if (this.chart === null) {
         return
       }
+      console.log(`map/china/simple [${this.name}] [组件尺寸变化 ${value.height}*${value.width}]`)
       this.dispose()
       this.init()
     },
@@ -110,7 +113,7 @@ export default {
     }
   },
   mounted () {
-    console.log(`map/china/simple [${this.name}] [等待尺寸数据 ...]`)
+    console.log(`map/china/simple [${this.name}] [mounted]`)
   },
   methods: {
     dispose () {

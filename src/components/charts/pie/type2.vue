@@ -93,7 +93,7 @@ export default {
   watch: {
     ready (value) {
       if (value) {
-        console.log(`pie/type2 [${this.name}] [ready]`)
+        console.log(`map/china/simple [${this.name}] [watch: ready is ${value}]`)
         this.init()
       }
     },
@@ -111,7 +111,7 @@ export default {
     }
   },
   mounted () {
-    console.log(`pie/type2 [${this.name}] [等待尺寸数据 ...]`)
+    console.log(`pie/type2 [${this.name}] [mounted]`)
   },
   methods: {
     dispose () {
