@@ -24,7 +24,7 @@ export default {
       chart: null,
       option: {
         title: {
-          text: '',
+          text: this.name,
           x: 'center',
           top: 5,
           textStyle: {
@@ -32,50 +32,89 @@ export default {
             color: this.colorTitle
           }
         },
-        color: [
-          '#f7d09c',
-          '#9c62e4',
-          '#db5c5e',
-          '#5ea2db',
-          '#55be9d',
-          '#da9664'
-        ],
+        grid: {
+          left: 50,
+          right: 30,
+          top: 54,
+          bottom: 30
+        },
         tooltip: {
           trigger: 'item',
-          formatter: '{b}<br/>数量: {c}<br/>占比: {d}%'
+          formatter: function (params, ticket, callback) {
+            var res = params.name + ' : ' + params.value
+            return res
+          }
         },
+        label: {
+          normal: {
+            show: true,
+            position: 'top',
+            formatter: '{c}'
+          }
+        },
+        xAxis: [{
+          data: this.data.map(e => e.name).reverse(),
+          interval: 500,
+          axisLine: {
+            // 坐标轴
+            lineStyle: {
+              color: '#434B56'
+            }
+          },
+          axisTick: {
+            // 刻度
+            show: false
+          },
+          axisLabel: {
+            // 坐标文字
+            fontSize: 10,
+            color: '#BCC4CE'
+          }
+        }],
+        yAxis: [{
+          axisLine: {
+            // 坐标轴
+            lineStyle: {
+              color: '#434B56'
+            }
+          },
+          splitLine: {
+            // 网格区域分割线
+            lineStyle: {
+              color: '#333945'
+            }
+          },
+          axisTick: {
+            // 刻度
+            show: false
+          },
+          axisLabel: {
+            // 坐标文字
+            fontSize: 10,
+            color: '#BCC4CE'
+          }
+        }],
         series: [
           {
-            name: '占比',
-            type: 'pie',
-            center: ['50%', '55%'],
-            radius: ['25%', '50%'],
-            avoidLabelOverlap: true,
+            type: 'bar',
+            data: this.data.reverse(),
+            barMaxWidth: 20,
             itemStyle: {
               normal: {
-                borderColor: '#171F29',
-                borderWidth: 4
-              }
-            },
-            label: {
-              normal: {
-                show: true,
-                formatter: '{b}\n{d}%',
-                textStyle: {
-                  fontSize: 12,
-                  color: '#BCC4CE'
+                barBorderRadius: [2, 2, 0, 0],
+                color: function (params) {
+                  var colorList = [
+                    '#5ea2db',
+                    '#db5c5e',
+                    '#f7d09c',
+                    '#55be9d',
+                    '#9c62e4',
+                    '#da9664'
+                  ]
+                  return colorList[params.dataIndex]
                 }
-              },
-              emphasis: {
-                show: true
               }
-            },
-            labelLine: {
-              normal: {
-                show: true
-              }
-            },
-            data: []
+            }
           }
         ]
       }

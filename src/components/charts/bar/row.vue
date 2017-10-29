@@ -5,7 +5,6 @@
 <script>
 import echarts from '@/plugins/echarts.js'
 export default {
-  name: 'HelloWorld',
   props: {
     name: { default: '未命名图表' },
     data: { default: () => {} },
@@ -65,14 +64,14 @@ export default {
           x: 'center',
           top: 5,
           textStyle: {
-            fontSize: 12,
+            fontSize: 16,
             color: this.colorTitle
           }
         },
         grid: {
           left: 40,
           right: 30,
-          top: 50,
+          top: 54,
           bottom: 10
         },
         tooltip: {

@@ -2,6 +2,10 @@
   <div id="screen" :style="screenStyle">
     <!-- 标题 -->
     <div class="row title" :style="titleStyle">
+      <div class="btnGroup">
+        <div class="btn" @click="togglePlay">{{autoPlay ? '停止播放' : '自动播放'}}</div>
+        <div class="btn" @click="$root.toggleFullScreen">{{$root.isFullScreen ? '退出全屏' : '进入全屏'}}</div>
+      </div>
       <slot name="title">标题插槽</slot>
     </div>
     <!-- 主体区域 -->
@@ -63,7 +67,7 @@ export default {
     margin: { default: 20 },
     heightMax: { default: 1080 },
     widthMax: { default: 1920 },
-    heightTitle: { default: 100 },
+    heightTitle: { default: 80 },
     // 列的设置数据
     widthCol: {
       default: () => ['25%', '50%', '25%']
@@ -89,7 +93,9 @@ export default {
     dataNavActive: { default: 0 },
     dataNav: {
       default: () => []
-    }
+    },
+    // 自动播放相关
+    autoPlay: { default: false }
   },
   data () {
     return {
@@ -105,7 +111,7 @@ export default {
         backgroundColor: '#171F29',
         color: '#31AF8B',
         lineHeight: this.heightTitle + 'px',
-        fontSize: this.heightTitle - 60 + 'px'
+        fontSize: '30px'
       }
     },
     screenStyle () {
@@ -174,6 +180,10 @@ export default {
       // 点击数据导航按钮
       this.$emit('update:dataNavActive', value)
     },
+    togglePlay () {
+      // 切换自动播放
+      this.$emit('update:autoPlay', !this.autoPlay)
+    },
     updateSize () {
       // 更新尺寸
       let res = {}
@@ -206,6 +216,24 @@ export default {
       font-weight: bold;
       letter-spacing: 6px;
       border-radius: 2px;
+      position: relative;
+      .btnGroup{
+        position: absolute;
+        left: 20px;
+        top: 0px;
+        bottom: 0px;
+        font-size: 12px;
+        letter-spacing: 2px;
+        .btn{
+          float: left;
+          margin-left: 10px;
+          margin-right: 10px;
+          opacity: .5;
+          &:hover{
+            opacity: 1;
+          }
+        }
+      }
     }
     &.content{
       // content类是一个纵向自适应的容器

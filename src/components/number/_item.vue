@@ -1,10 +1,10 @@
 <template>
-  <div class="item">
-    <p class="text label" :style="style">
-      <span :style="styleBG"></span>
+  <div class="item" :style="itemStyle">
+    <p class="text label" :style="styleLabel">
+      <span v-if="point" :style="styleBG"></span>
       {{label}}
     </p>
-    <p class="text value" :style="style" ref="count"></p>
+    <p class="text value" :style="styleValue" ref="count"></p>
   </div>
 </template>
 
@@ -13,8 +13,13 @@ import Counter from 'countup.js'
 export default {
   props: {
     label: { default: 'label' },
-    value: { default: 'value' },
-    color: { default: 'red' }
+    value: { default: 100 },
+    color: { default: 'red' },
+    // 额外设置项
+    point: { default: true },
+    labelSize: { default: 14 },
+    valueSize: { default: 42 },
+    minWidth: { default: 160 }
   },
   data () {
     return {
@@ -29,6 +34,12 @@ export default {
     }
   },
   computed: {
+    itemStyle () {
+      // 最外层的容器样式
+      return {
+        minWidth: this.minWidth + 'px'
+      }
+    },
     style () {
       return {
         color: this.color
@@ -37,6 +48,22 @@ export default {
     styleBG () {
       return {
         backgroundColor: this.color
+      }
+    },
+    styleLabel () {
+      // label样式
+      return {
+        ...this.style,
+        fontSize: this.labelSize + 'px',
+        lineHeight: this.labelSize + 6 + 'px'
+      }
+    },
+    styleValue () {
+      // value样式
+      return {
+        ...this.style,
+        fontSize: this.valueSize + 'px',
+        lineHeight: this.valueSize + 6 + 'px'
       }
     }
   },
@@ -68,7 +95,6 @@ export default {
 <style lang="scss" scoped>
 .item{
   margin: 0px 20px;
-  min-width: 120px;
   .text{
     padding: 0px;
     margin: 0px;
@@ -81,14 +107,7 @@ export default {
       border-radius: 5px;
     }
     &.label{
-      font-size: 16px;
-      line-height: 16px;
-      margin-bottom: 10px;
       opacity: .6;
-    }
-    &.value{
-      font-size: 42px;
-      line-height: 40px;
     }
   }
 }

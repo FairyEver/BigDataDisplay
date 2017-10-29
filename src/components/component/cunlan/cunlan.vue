@@ -1,49 +1,65 @@
 <template>
-  <div>
-    <pie
-      :name="data[0].name"
-      :data="data[0].value"
-      :ready="ready"
-      :size="{height:50,width:50}"
-      :color-light="colorLight[0]"
-      :color-dark="colorDark[0]">
-    </pie>
-    <pie
-      :name="data[1].name"
-      :data="data[1].value"
-      :ready="ready"
-      :size="{height:50,width:50}"
-      :color-light="colorLight[1]"
-      :color-dark="colorDark[1]">
-    </pie>
-    <pie
-      :name="data[2].name"
-      :data="data[2].value"
-      :ready="ready"
-      :size="{height:50,width:50}"
-      :color-light="colorLight[2]"
-      :color-dark="colorDark[2]">
-    </pie>
-    <pie
-      :name="data[3].name"
-      :data="data[3].value"
-      :ready="ready"
-      :size="{height:50,width:50}"
-      :color-light="colorLight[3]"
-      :color-dark="colorDark[3]">
-    </pie>
+  <div :style="style" class="body">
+    <div class="title" :style="styleColor">{{name}}</div>
+    <div class="content">
+      <div class="info">
+        <!-- 数字信息 -->
+        <item
+          label="产蛋量"
+          :value="info.cd"
+          color="#DB5F52"
+          :point="point"
+          :label-size="labelSize"
+          :value-size="valueSize"
+          :minWidth="60">
+        </item>
+        <item
+          label="日耗料"
+          :value="info.hl"
+          color="#D69E41"
+          :point="point"
+          :label-size="labelSize"
+          :value-size="valueSize"
+          :minWidth="60">
+        </item>
+        <item
+          label="淘汰鸡"
+          :value="info.tt"
+          color="#58BCA0"
+          :point="point"
+          :label-size="labelSize"
+          :value-size="valueSize"
+          :minWidth="60">
+        </item>
+        <item
+          label="疫苗"
+          :value="info.ym"
+          color="#A35EDA"
+          :point="point"
+          :label-size="labelSize"
+          :value-size="valueSize"
+          :minWidth="60">
+        </item>
+        <!-- 数字信息 结束 -->
+      </div>
+      <div class="map">
+        <city :province="province"></city>
+      </div>
+      <div class="number" :style="styleColor">总存栏 {{value}} 只</div>
+    </div>
   </div>
 </template>
 
 <script>
-import pie from '@/components/charts/pie/type2.vue'
+import item from '@/components/number/_item.vue'
+import city from '@/components/charts/map/piece/mini.vue'
 export default {
   components: {
-    pie
+    item,
+    city
   },
   props: {
-    // 框架基础
-    ready: { default: false },
+    name: { default: '' },
     size: {
       default: () => {
         return {
@@ -52,42 +68,94 @@ export default {
         }
       }
     },
-    // 本组件需要的额外信息
-    // 标题
-    title: { default: '默认标题' },
-    // 总存栏数
-    num: { default: 0 },
-    // 展示数据
-    data: {
+    value: { default: 0 },
+    info: {
       default: () => {
-        return [
-          {
-            name: 'name1',
-            value: 30
-          },
-          {
-            name: 'name2',
-            value: 50
-          },
-          {
-            name: 'name3',
-            value: 70
-          },
-          {
-            name: 'name4',
-            value: 90
-          }
-        ]
+        return {
+          cd: 0,
+          hl: 0,
+          tt: 0,
+          ym: 0
+        }
       }
     },
+    province: { default: '河北' },
     // 样式设置
-    colorLight: {
-      default: () => ['#DB5F52', '#D69E41', '#58BCA0', '#A35EDA']
+    colorTitle: { default: '#FFF' }
+  },
+  data () {
+    return {
+      point: false,
+      labelSize: 12,
+      valueSize: 26
+    }
+  },
+  computed: {
+    style () {
+      // 最外层元素的样式
+      return {
+        width: this.size.width + 'px',
+        height: this.size.height + 'px'
+      }
     },
-    colorDark: {
-      default: () => ['#341F24', '#332B21', '#1A3134', '#291F3F']
+    styleColor () {
+      return {
+        color: this.colorTitle
+      }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+$heightTitle: 30px;
+$widthInfo: 80px;
+$heightNumber: 30px;
+.body{
+  position: relative;
+  .title{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: $heightTitle;
+    line-height: $heightTitle;
+    text-align: center;
+    font-size: 14px;
+  }
+  .content{
+    position: absolute;
+    top: $heightTitle;
+    bottom: 10px;
+    width: 100%;
+    .info{
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      width: $widthInfo;
+      // 居中
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
+    }
+    .map{
+      position: absolute;
+      top: 0px;
+      left: $widthInfo;
+      right: 0px;
+      bottom: $heightNumber;
+    }
+    .number{
+      position: absolute;
+      bottom: 0px;
+      left: $widthInfo;
+      right: 0px;
+      height: $heightNumber;
+      line-height: $heightNumber;
+    }
+  }
+}
+</style>
 

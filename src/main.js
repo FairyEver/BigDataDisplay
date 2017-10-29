@@ -15,7 +15,19 @@ new Vue({
   router,
   template: '<App/>',
   components: { App },
+  data () {
+    return {
+      isFullScreen: false
+    }
+  },
   methods: {
+    toggleFullScreen () {
+      if (this.isFullScreen) {
+        this.exitFullScreen()
+      } else {
+        this.fullScreen()
+      }
+    },
     // 全屏
     fullScreen () {
       var docElm = document.documentElement
@@ -28,6 +40,7 @@ new Vue({
       } else if (docElm.msRequestFullscreen) {
         docElm.msRequestFullscreen()
       }
+      this.isFullScreen = true
     },
     // 退出全屏
     exitFullScreen () {
@@ -40,6 +53,7 @@ new Vue({
       } else if (document.msExitFullscreen) {
         document.msExitFullscreen()
       }
+      this.isFullScreen = false
     }
   }
 })
