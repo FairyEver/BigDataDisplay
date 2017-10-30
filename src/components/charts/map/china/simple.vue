@@ -21,7 +21,19 @@ export default {
     defaultActiveName: { default: '河北' },
     // 自动播放相关
     autoPlay: { default: false },
-    autoPlayTimeSpace: { default: 1000 }
+    autoPlayTimeSpace: { default: 1000 },
+    // 可以使用的地区 除了这几个地区 其它的都不能点 不能激活
+    ableSpace: {
+      default: () => {
+        return [
+          '河北',
+          '山东',
+          '辽宁',
+          '江苏',
+          '湖北'
+        ]
+      }
+    }
   },
   data () {
     return {
@@ -43,10 +55,12 @@ export default {
           }
         },
         tooltip: {
-          trigger: 'item'
+          show: false
+          // trigger: 'item',
+          // formatter: '{c0}'
         },
         visualMap: {
-          show: false,
+          show: true,
           min: 0,
           max: 10000,
           color: ['#2DB1FF', '#002330']
@@ -63,7 +77,6 @@ export default {
         },
         series: [
           {
-            name: 'Number',
             type: 'map',
             mapType: 'china',
             roam: false,
@@ -160,6 +173,16 @@ export default {
     console.log(`map/china/simple [${this.name}] [mounted]`)
   },
   methods: {
+    inArray (arr, obj) {
+      // 返回是否在指定的数组中出现
+      var i = arr.length
+      while (i--) {
+        if (arr[i] === obj) {
+          return true
+        }
+      }
+      return false
+    },
     playStart () {
       // 开始自动播放
       if (this.autoPlayTimer === null) {
@@ -186,12 +209,15 @@ export default {
     },
     playCount () {
       // 自动播放的每一步
-      if (this.activeCount >= this.data.length) {
+      if (this.activeCount >= this.ableSpace.length) {
         this.playStop()
         this.$emit('playRound')
       } else {
         // 更新激活的区域
-        this.selectedMap = this.data[this.activeCount].name
+        // 在所有的数据中循环
+        // this.selectedMap = this.data[this.activeCount].name
+        // 只在允许的数据中循环
+        this.selectedMap = this.ableSpace[this.activeCount]
         this.activeCount += 1
       }
     },
@@ -230,12 +256,15 @@ export default {
         this.chart.setOption(this.option)
         let _this = this
         this.chart.on('click', function (params) {
-          // 检查是否在自动播放
-          if (_this.autoPlayTimer !== null) {
-            _this.playStop()
+          // 检查是否在允许的区域中
+          if (_this.inArray(_this.ableSpace, params.data.name)) {
+            // 检查是否在自动播放
+            if (_this.autoPlayTimer !== null) {
+              _this.playStop()
+            }
+            // 激活这块地图
+            _this.selectedMap = params.data.name
           }
-          // 激活这块地图
-          _this.selectedMap = params.data.name
         })
         this.activeMap(this.defaultActiveName)
         console.log(`map/china/simple [${this.name}] [图表实例化完毕]`)

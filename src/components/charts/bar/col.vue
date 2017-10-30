@@ -1,5 +1,5 @@
 <template>
-  <div ref='chart' :style="style"></div>
+  <div ref='chart' :style="style" @click="checkData"></div>
 </template>
 
 <script>
@@ -169,6 +169,7 @@ export default {
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
         this.option.title.text = this.name
+        this.option.xAxis[0].data = this.data.map(e => e.name).reverse()
         this.option.series[0].data = this.data
         this.chart.setOption(this.option)
         // console.log(`pie/type1 [${this.name}] [图表实例化完毕]`)
@@ -178,9 +179,14 @@ export default {
       // 更新
       this.$nextTick(() => {
         this.option.title.text = this.name
+        this.option.xAxis[0].data = this.data.map(e => e.name).reverse()
         this.option.series[0].data = this.data
         this.chart.setOption(this.option)
       })
+    },
+    checkData () {
+      // 检查数据
+      console.log(this.data)
     }
   }
 }

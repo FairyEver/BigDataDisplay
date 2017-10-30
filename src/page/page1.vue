@@ -58,6 +58,7 @@
     <template slot="r1">
       <cunlan-info
         :name="rName + rType + '存栏量'"
+        :ready="layoutReady"
         :size="offsetSize.r1"
         :value="r1Value"
         :info="r1Info"
@@ -82,6 +83,7 @@
         :data="r3Data"
         :color-title="colorTitle">
       </pie>
+      <!-- {{dataMap}} -->
     </template>
 
   </layout>

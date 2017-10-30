@@ -21,7 +21,7 @@
     </template>
     <template slot="l2">
       <bar-col
-        name="全国存栏区间分布"
+        name="全国养殖户年龄分布"
         :ready="layoutReady"
         :size="offsetSize.l2"
         :data="yangZhiHuNianLingFenBu"
@@ -191,7 +191,7 @@ export default {
   },
   methods: {
     mapClick (params) {
-      console.log(params)
+      // console.log(params)
       // 更新地图下面的数据
       if (params.data) {
         let data = params.data
@@ -201,7 +201,9 @@ export default {
         this.r1Info = data.r1
         this.r1Value = data.value
         // r2
+        console.log('----')
         this.r2Data = data.r2
+        console.log(this.r2Data)
         // r3
         this.r3Data = data.r3
       } else {

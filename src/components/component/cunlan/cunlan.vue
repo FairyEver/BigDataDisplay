@@ -43,7 +43,13 @@
         <!-- 数字信息 结束 -->
       </div>
       <div class="map">
-        <city :province="province"></city>
+        <map-x
+          :name="name"
+          :ready="ready"
+          :size="{height:200, width:200}"
+          :data="[{name:'衡水市',value:1234}]"
+          :map-type="mapType">
+        </map-x>
       </div>
       <div class="number" :style="styleColor">总存栏 {{value}} 只</div>
     </div>
@@ -52,14 +58,15 @@
 
 <script>
 import item from '@/components/number/_item.vue'
-import city from '@/components/charts/map/piece/mini.vue'
+import mapX from '@/components/charts/map/china/mini.vue'
 export default {
   components: {
     item,
-    city
+    mapX
   },
   props: {
     name: { default: '' },
+    data: { default: () => [] },
     size: {
       default: () => {
         return {
@@ -68,6 +75,8 @@ export default {
         }
       }
     },
+    province: { default: '河北' },
+    // 下面就不是地图相关的了
     value: { default: 0 },
     info: {
       default: () => {
@@ -79,7 +88,6 @@ export default {
         }
       }
     },
-    province: { default: '河北' },
     // 样式设置
     colorTitle: { default: '#FFF' }
   },
@@ -101,6 +109,26 @@ export default {
     styleColor () {
       return {
         color: this.colorTitle
+      }
+    },
+    ready () {
+      return !(this.mapType === null)
+    },
+    mapType () {
+      // 地图区域
+      switch (this.province) {
+        case '山东':
+          return 'shandong'
+        case '江苏':
+          return 'jiangsu'
+        case '河北':
+          return 'hebei'
+        case '湖北':
+          return 'hubei'
+        case '辽宁':
+          return 'liaoning'
+        default:
+          return null
       }
     }
   }

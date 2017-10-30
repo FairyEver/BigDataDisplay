@@ -3,7 +3,7 @@
 </template>
 
 <script>
-// 这个组件不单独使用，只是生成一个小饼图，在“城市存栏量”中使用
+// 这个组件不单独使用，只是生成一个小饼图
 import echarts from '@/plugins/echarts.js'
 export default {
   props: {
