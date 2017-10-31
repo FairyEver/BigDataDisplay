@@ -94,7 +94,7 @@ export default {
 
 <style lang="scss" scoped>
 .item{
-  margin: 0px 20px;
+  margin: 0px;
   .text{
     padding: 0px;
     margin: 0px;

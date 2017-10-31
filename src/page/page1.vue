@@ -52,7 +52,10 @@
       </map-x>
     </template>
     <template slot="c2">
-      <number-x :data="mapInfo"></number-x>
+      <number-x
+        :data="mapInfo"
+        :size="offsetSize.c2">
+      </number-x>
     </template>
 
     <template slot="r1">

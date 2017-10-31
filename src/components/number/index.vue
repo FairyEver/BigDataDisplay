@@ -5,7 +5,8 @@
       :key="index"
       :label="item.label"
       :value="item.value"
-      :color="color[index]">
+      :color="color[index]"
+      :min-width="size.width/4">
     </item>
   </div>
 </template>
@@ -32,6 +33,9 @@ export default {
         { label: 'lable3', value: '0000' },
         { label: 'lable4', value: '0000' }
       ]
+    },
+    size: {
+      default: () => {}
     }
   }
 }
