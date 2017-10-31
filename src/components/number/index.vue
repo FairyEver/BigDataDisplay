@@ -6,7 +6,7 @@
       :label="item.label"
       :value="item.value"
       :color="color[index]"
-      :min-width="size.width/4">
+      :min-width="minWidth">
     </item>
   </div>
 </template>
@@ -35,7 +35,16 @@ export default {
       ]
     },
     size: {
-      default: () => {}
+      default: () => null
+    }
+  },
+  computed: {
+    minWidth () {
+      if ((this.size === null) || (this.size.width === 0)) {
+        return 100
+      } else {
+        return this.size.width / 4
+      }
     }
   }
 }

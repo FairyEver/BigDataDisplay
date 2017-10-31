@@ -119,11 +119,18 @@ export default {
         this.refresh()
       }
     },
-    size () {
-      if (this.chart) {
-        this.dispose()
-        this.init()
+    size (value, oldValue) {
+      if ((value.height === oldValue.height) || (value.width === oldValue.width)) {
+        return
       }
+      if (!this.ready) {
+        return
+      }
+      if (this.chart === null) {
+        return
+      }
+      this.dispose()
+      this.init()
     }
   },
   mounted () {
@@ -153,7 +160,6 @@ export default {
     },
     refresh () {
       if (this.chart) {
-        // 更新
         this.$nextTick(() => {
           // 更新设置
           this.updateOption()

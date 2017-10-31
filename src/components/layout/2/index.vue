@@ -228,9 +228,9 @@ export default {
           float: left;
           margin-left: 10px;
           margin-right: 10px;
-          opacity: .5;
+          opacity: 0;
           &:hover{
-            opacity: 1;
+            opacity: .2;
           }
         }
       }
