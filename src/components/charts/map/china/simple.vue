@@ -146,6 +146,7 @@ export default {
     data (value, oldValue) {
       console.log(`map/china/simple [${this.name}] [检测到了数据更新]`)
       this.refresh()
+      // 这里还应该还原状态
     },
     autoPlay (value) {
       console.log(`map/china/simple [${this.name}] [监听到了autoPlay变化为${value}]`)
