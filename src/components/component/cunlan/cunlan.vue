@@ -124,7 +124,7 @@ export default {
       if (this.size.width === 0) {
         return 0
       } else {
-        return this.size.width - 80
+        return this.size.width - 110
       }
     },
     ready () {
@@ -153,7 +153,7 @@ export default {
 
 <style lang="scss" scoped>
 $heightTitle: 30px;
-$widthInfo: 80px;
+$widthInfo: 110px;
 .body{
   position: relative;
   .title{

@@ -118,6 +118,12 @@ export default {
       if (this.chart) {
         this.refresh()
       }
+    },
+    size () {
+      if (this.chart) {
+        this.dispose()
+        this.init()
+      }
     }
   },
   mounted () {

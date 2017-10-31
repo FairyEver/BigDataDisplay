@@ -60,10 +60,17 @@ export default {
           // formatter: '{c0}'
         },
         visualMap: {
+          type: 'continuous',
           show: true,
           min: 0,
           max: 10000,
-          color: ['#2DB1FF', '#002330']
+          itemWidth: 8,
+          itemHeight: 50,
+          color: ['#2DB1FF', '#002330'],
+          text: ['高', '低'],
+          textStyle: {
+            color: '#2DB1FF'
+          }
         },
         toolbox: {
           show: false
@@ -146,7 +153,6 @@ export default {
     data (value, oldValue) {
       console.log(`map/china/simple [${this.name}] [检测到了数据更新]`)
       this.refresh()
-      // 这里还应该还原状态
     },
     autoPlay (value) {
       console.log(`map/china/simple [${this.name}] [监听到了autoPlay变化为${value}]`)
@@ -252,7 +258,7 @@ export default {
         this.data.forEach(e => {
           allCount = allCount + Number(e.value)
         })
-        this.option.title.text = '全国存栏 约' + Math.round(allCount) + '万只'
+        this.option.title.text = '全国存栏' + Math.round(allCount) + '万只'
         this.option.series[0].data = this.data
         // 重新设置图表
         this.chart.setOption(this.option)
@@ -284,7 +290,7 @@ export default {
         this.option.series[0].data = this.data
         // 重新设置图表
         this.chart.setOption(this.option)
-        this.emit()
+        this.activeMap(this.selectedMap)
         if (this.autoPlay) {
           this.playStart()
         }
@@ -292,13 +298,14 @@ export default {
     },
     emit (name) {
       // 这个方法会向外提交模拟点击了某个区域的数据
-      // 查找数据
+      // 定义到底是哪个地区
       let filterName
       if (name) {
         filterName = name
       } else {
         filterName = this.defaultActiveName
       }
+      // 筛选数据
       let data = this.data.filter(e => e.name === filterName)
       if (data.length === 0) {
         data = [this.data[0]]
