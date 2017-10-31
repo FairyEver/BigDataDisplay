@@ -68,7 +68,7 @@
     </template>
     <template slot="r2">
       <pie
-        :name="rName + rType + '存栏区间分布'"
+        :name="rName + '存栏区间分布'"
         :ready="layoutReady"
         :size="offsetSize.r2"
         :data="r2Data"
@@ -77,7 +77,7 @@
     </template>
     <template slot="r3">
       <pie
-        :name="rName + rType + '蛋鸡品种占比'"
+        :name="rName + '蛋鸡品种占比'"
         :ready="layoutReady"
         :size="offsetSize.r3"
         :data="r3Data"
@@ -106,6 +106,7 @@ import pinZhongZhanBi from '@/data/old/page1/全国品种占比.js'
 // 下面是新的数据
 import pinZhong from '@/data/new/page1/全国品种.js'
 import cunLan from '@/data/new/page1/全国存栏区间.js'
+import cunLanInfoChina from '@/data/new/page1/每种存栏的四项数据_全国.js'
 
 export default {
   components: {
@@ -121,6 +122,7 @@ export default {
       // 新版数据
       pinZhong,
       cunLan,
+      cunLanInfoChina,
       // 自动播放
       autoPlay: false,
       // 布局尺寸
@@ -188,11 +190,12 @@ export default {
     },
     mapInfo () {
       // 产蛋 日耗料 淘汰鸡 疫苗 传递给中间下部分 根据地图右侧的控制器切换
+      let data = this.cunLanInfoChina.filter(e => e.name === this.dataNavActive)[0]
       return [
-        { label: '产蛋量', value: Math.round(Math.random() * 1000) },
-        { label: '日耗料', value: Math.round(Math.random() * 1000) },
-        { label: '淘汰鸡', value: Math.round(Math.random() * 1000) },
-        { label: '疫苗', value: Math.round(Math.random() * 1000) }
+        { label: '产蛋量', value: data.cd },
+        { label: '日耗料', value: data.hl },
+        { label: '淘汰鸡', value: data.tt },
+        { label: '疫苗', value: data.ym }
       ]
     },
     rType () {
