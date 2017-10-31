@@ -83,7 +83,6 @@
         :data="r3Data"
         :color-title="colorTitle">
       </pie>
-      <!-- {{dataMap}} -->
     </template>
 
   </layout>
@@ -99,10 +98,14 @@ import pie from '@/components/charts/pie/type1.vue'
 import cunlanInfo from '@/components/component/cunlan/cunlan.vue'
 
 // 数据
-import dataMap from '@/data/page1/地图数据.js'
-import dataTop10 from '@/data/page1/全国存栏量.js'
-import cunLanFenBu from '@/data/page1/全国存栏区间分布.js'
-import pinZhongZhanBi from '@/data/page1/全国品种占比.js'
+import dataMap from '@/data/old/page1/地图数据.js'
+import dataTop10 from '@/data/old/page1/全国存栏量.js'
+import cunLanFenBu from '@/data/old/page1/全国存栏区间分布.js'
+import pinZhongZhanBi from '@/data/old/page1/全国品种占比.js'
+
+// 下面是新的数据
+import pinZhong from '@/data/new/page1/全国品种.js'
+import cunLan from '@/data/new/page1/全国存栏区间.js'
 
 export default {
   components: {
@@ -115,6 +118,9 @@ export default {
   },
   data () {
     return {
+      // 新版数据
+      pinZhong,
+      cunLan,
       // 自动播放
       autoPlay: false,
       // 布局尺寸
@@ -172,17 +178,21 @@ export default {
   },
   computed: {
     dataMapFilted () {
-      // 地图数据
-      return this.dataMap[this.dataNavActive].mapData
+      // 地图数据 这个计算属性会传递给地图
+      return this.pinZhong.map(e => {
+        return {
+          name: e.name,
+          value: e.all
+        }
+      })
     },
     mapInfo () {
-      // 中间下部分地图信息 根据地图右侧的控制器切换
-      let mapInfo = this.dataMap[this.dataNavActive].mapInfo
+      // 产蛋 日耗料 淘汰鸡 疫苗 传递给中间下部分 根据地图右侧的控制器切换
       return [
-        { label: '产蛋量', value: mapInfo.cd },
-        { label: '日耗料', value: mapInfo.hl },
-        { label: '淘汰鸡', value: mapInfo.tt },
-        { label: '疫苗', value: mapInfo.tm }
+        { label: '产蛋量', value: Math.round(Math.random() * 1000) },
+        { label: '日耗料', value: Math.round(Math.random() * 1000) },
+        { label: '淘汰鸡', value: Math.round(Math.random() * 1000) },
+        { label: '疫苗', value: Math.round(Math.random() * 1000) }
       ]
     },
     rType () {

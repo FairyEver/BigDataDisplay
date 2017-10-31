@@ -96,10 +96,10 @@ import pie from '@/components/charts/pie/type1.vue'
 import cunlanInfo from '@/components/component/cunlan/cunlan.vue'
 
 // 数据
-import dataMap from '@/data/page2/地图数据.js'
-import dataTop10 from '@/data/page2/养殖户排名.js'
-import yangZhiHuNianLingFenBu from '@/data/page2/全国养殖户年龄分布.js'
-import yangZhiHuXueLi from '@/data/page2/全国养殖户学历分布.js'
+import dataMap from '@/data/old/page2/地图数据.js'
+import dataTop10 from '@/data/old/page2/养殖户排名.js'
+import yangZhiHuNianLingFenBu from '@/data/old/page2/全国养殖户年龄分布.js'
+import yangZhiHuXueLi from '@/data/old/page2/全国养殖户学历分布.js'
 
 export default {
   components: {
