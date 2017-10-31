@@ -1,6 +1,6 @@
 <template>
   <div :style="style" class="body">
-    <div class="title" :style="styleColor">{{name}}</div>
+    <div class="title" :style="styleColor">{{name}} {{value}}万只</div>
     <div class="content">
       <div class="info">
         <!-- 数字信息 -->
@@ -42,16 +42,15 @@
         </item>
         <!-- 数字信息 结束 -->
       </div>
-      <div class="map">
+      <div class="map" ref="map">
         <map-x
           :name="name"
           :ready="ready"
-          :size="{height:200, width:200}"
-          :data="[{name:'衡水市',value:1234}]"
+          :size="{height:mapHeight, width:mapWidth}"
+          :data="map"
           :map-type="mapType">
         </map-x>
       </div>
-      <div class="number" :style="styleColor">总存栏 {{value}} 只</div>
     </div>
   </div>
 </template>
@@ -88,6 +87,9 @@ export default {
         }
       }
     },
+    map: {
+      default: () => []
+    },
     // 样式设置
     colorTitle: { default: '#FFF' }
   },
@@ -111,8 +113,22 @@ export default {
         color: this.colorTitle
       }
     },
+    mapHeight () {
+      if (this.size.height === 0) {
+        return 0
+      } else {
+        return this.size.height - 30
+      }
+    },
+    mapWidth () {
+      if (this.size.width === 0) {
+        return 0
+      } else {
+        return this.size.width - 80
+      }
+    },
     ready () {
-      return !(this.mapType === null)
+      return !(this.mapType === null || this.mapHeight === 0 || this.mapWidth === 0)
     },
     mapType () {
       // 地图区域
@@ -138,7 +154,6 @@ export default {
 <style lang="scss" scoped>
 $heightTitle: 30px;
 $widthInfo: 80px;
-$heightNumber: 30px;
 .body{
   position: relative;
   .title{
@@ -154,7 +169,7 @@ $heightNumber: 30px;
   .content{
     position: absolute;
     top: $heightTitle;
-    bottom: 10px;
+    bottom: 0px;
     width: 100%;
     .info{
       position: absolute;
@@ -173,15 +188,7 @@ $heightNumber: 30px;
       top: 0px;
       left: $widthInfo;
       right: 0px;
-      bottom: $heightNumber;
-    }
-    .number{
-      position: absolute;
       bottom: 0px;
-      left: $widthInfo;
-      right: 0px;
-      height: $heightNumber;
-      line-height: $heightNumber;
     }
   }
 }

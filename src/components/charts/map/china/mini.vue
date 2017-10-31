@@ -31,17 +31,17 @@ export default {
           formatter: (params) => {
             if (isNaN(params.value)) {
               // 没有数据
-              return 'hhhhh'
+              return '暂时没有数据'
             } else {
               // 有数据
-              return 'xxxxx'
+              return params.value + '万只'
             }
           }
         },
         visualMap: {
           show: false,
           min: 0,
-          max: 10000,
+          max: 1234,
           color: ['#2DB1FF', '#002330']
         },
         toolbox: {
@@ -63,7 +63,9 @@ export default {
               normal: {
                 areaColor: 'rgba(0,0,0,0)',
                 label: {
-                  show: false
+                  show: false,
+                  fontSize: 8,
+                  color: '#52D7E9'
                 },
                 borderWidth: 1,
                 borderColor: '#1E6591'
@@ -106,6 +108,16 @@ export default {
         console.log(`map/china/simple [${this.name}] [watch: ready is ${value}]`)
         this.init()
       }
+    },
+    mapType () {
+      if (this.chart) {
+        this.refresh()
+      }
+    },
+    data () {
+      if (this.chart) {
+        this.refresh()
+      }
     }
   },
   mounted () {
@@ -141,7 +153,6 @@ export default {
           this.updateOption()
           // 重新设置图表
           this.chart.setOption(this.option)
-          this.emit()
           if (this.autoPlay) {
             this.playStart()
           }

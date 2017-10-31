@@ -57,11 +57,12 @@
 
     <template slot="r1">
       <cunlan-info
-        :name="rName + rType + '存栏量'"
+        :name="rName + rType + '存栏'"
         :ready="layoutReady"
         :size="offsetSize.r1"
         :value="r1Value"
         :info="r1Info"
+        :map="pieceMapFilted"
         :province="rName"
         :color-title="colorTitle">
       </cunlan-info>
@@ -104,9 +105,11 @@ import cunLanFenBu from '@/data/old/page1/全国存栏区间分布.js'
 import pinZhongZhanBi from '@/data/old/page1/全国品种占比.js'
 
 // 下面是新的数据
-import pinZhong from '@/data/new/page1/全国品种.js'
+import pinZhongChina from '@/data/new/page1/全国品种.js'
+import pinZhongPiece from '@/data/new/page1/地区品种.js'
 import cunLan from '@/data/new/page1/全国存栏区间.js'
 import cunLanInfoChina from '@/data/new/page1/每种存栏的四项数据_全国.js'
+import cunLanInfoPiece from '@/data/new/page1/每种存栏的四项数据_地区.js'
 
 export default {
   components: {
@@ -120,9 +123,11 @@ export default {
   data () {
     return {
       // 新版数据
-      pinZhong,
+      pinZhongChina,
+      pinZhongPiece,
       cunLan,
       cunLanInfoChina,
+      cunLanInfoPiece,
       // 自动播放
       autoPlay: false,
       // 布局尺寸
@@ -161,30 +166,30 @@ export default {
         tt: 0,
         ym: 0
       },
-      r1Value: 0,
-      // 每个地区的存栏区间分布 r2
-      r2Data: [
-        // {name: 'A', value: '12320'},
-        // {name: 'B', value: '34512'},
-        // {name: 'C', value: '23482'},
-        // {name: 'D', value: '23789'}
-      ],
-      // 品种占比 r3
-      r3Data: [
-        // {name: 'A', value: '12320'},
-        // {name: 'B', value: '34512'},
-        // {name: 'C', value: '23482'},
-        // {name: 'D', value: '23789'}
-      ]
+      r1Value: 0
     }
   },
   computed: {
+    pieceMapFilted () {
+      // 右上角小地图的数据
+      let data = this.pinZhongPiece.filter(e => e.name === this.rName)
+      if (data.length > 0) {
+        return data[0].value.map(e => {
+          return {
+            name: e.name,
+            value: e[this.dataNavActive]
+          }
+        })
+      } else {
+        return []
+      }
+    },
     dataMapFilted () {
       // 地图数据 这个计算属性会传递给地图
-      return this.pinZhong.map(e => {
+      return this.pinZhongChina.map(e => {
         return {
           name: e.name,
-          value: e.all
+          value: e[this.dataNavActive]
         }
       })
     },
@@ -212,6 +217,33 @@ export default {
         default:
           return ''
       }
+    },
+    r2Data () {
+      // r2数据 地区的存栏区间
+      let data = cunLan.filter(e => e.name === this.rName)
+      if (data.length > 0) {
+        return [
+          {name: '＜1000', value: data[0]['＜1000']},
+          {name: '1000-3000', value: data[0]['1000-3000']},
+          {name: '3000-5000', value: data[0]['3000-5000']},
+          {name: '5000-10000', value: data[0]['5000-10000']},
+          {name: '>10000', value: data[0]['>10000']}
+        ]
+      } else {
+        return []
+      }
+    },
+    r3Data () {
+      let data = pinZhongChina.filter(e => e.name === this.rName)
+      if (data.length > 0) {
+        return [
+          {name: '红壳蛋鸡', value: data[0].hong},
+          {name: '粉壳蛋鸡', value: data[0].fen},
+          {name: '白壳蛋鸡', value: data[0].bai}
+        ]
+      } else {
+        return []
+      }
     }
   },
   watch: {
@@ -220,6 +252,10 @@ export default {
       this.$router.push({
         name: value
       })
+    },
+    dataNavActive (value) {
+      // 数据导航的值发生变化
+      this.refreshR1Data(this.pinZhongChina.filter(e => e.name === this.rName)[0][value])
     }
   },
   mounted () {
@@ -228,6 +264,17 @@ export default {
     }
   },
   methods: {
+    refreshR1Data (value) {
+      // 更新r1相关的数据
+      let r1Data = this.cunLanInfoPiece.filter(e => (e.name === this.rName) && (e.type === this.dataNavActive))
+      this.r1Value = value
+      this.r1Info = {
+        cd: r1Data[0].cd,
+        hl: r1Data[0].hl,
+        tt: r1Data[0].tt,
+        ym: r1Data[0].ym
+      }
+    },
     mapClick (params) {
       // 更新地图下面的数据
       if (params.data) {
@@ -235,12 +282,7 @@ export default {
         // r
         this.rName = data.name
         // r1
-        this.r1Info = data.r1
-        this.r1Value = data.value
-        // r2
-        this.r2Data = data.r2
-        // r3
-        this.r3Data = data.r3
+        this.refreshR1Data(data.value)
       } else {
         // r
         this.rName = ''
@@ -252,10 +294,6 @@ export default {
           ym: 0
         }
         this.r1Value = 0
-        // r2
-        this.r2Data = []
-        // r3
-        this.r3Data = []
       }
     },
     mapPlayRound () {

@@ -147,9 +147,6 @@ export default {
       console.log(`map/china/simple [${this.name}] [检测到了数据更新]`)
       this.refresh()
     },
-    name () {
-      this.refreshTitle()
-    },
     autoPlay (value) {
       console.log(`map/china/simple [${this.name}] [监听到了autoPlay变化为${value}]`)
       // 监视这个值实现控制自动播放
@@ -250,7 +247,11 @@ export default {
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
         // 更新设置
-        this.option.title.text = this.name
+        let allCount = 0
+        this.data.forEach(e => {
+          allCount = allCount + Number(e.value)
+        })
+        this.option.title.text = '全国存栏 约' + Math.round(allCount) + '万只'
         this.option.series[0].data = this.data
         // 重新设置图表
         this.chart.setOption(this.option)
@@ -274,26 +275,17 @@ export default {
       // 更新
       this.$nextTick(() => {
         // 更新设置
-        this.option.title.text = this.name
+        let allCount = 0
+        this.data.forEach(e => {
+          allCount = allCount + Number(e.value)
+        })
+        this.option.title.text = '全国存栏 约' + Math.round(allCount) + '万只'
         this.option.series[0].data = this.data
         // 重新设置图表
         this.chart.setOption(this.option)
         this.emit()
         if (this.autoPlay) {
           this.playStart()
-        }
-      })
-    },
-    refreshTitle () {
-      // 这个方法只适用于标题改变
-      this.$nextTick(() => {
-        // 更新设置
-        this.option.title.text = this.name
-        // 重新设置图表
-        this.chart.setOption(this.option)
-        // 如果之前有激活的区域 再次将这个区域激活 但是这个激活不会再向外发送事件
-        if (this.selectedMap) {
-          this.activeMap(this.selectedMap, false)
         }
       })
     },
