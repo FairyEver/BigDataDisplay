@@ -7,8 +7,8 @@
     :data-nav-active.sync="dataNavActive"
     :offset-size.sync="offsetSize"
     :layout-ready.sync="layoutReady"
-    :h-item-l1="220"
-    :h-item-r1="220">
+    :h-item-l1="160"
+    :h-item-r1="160">
 
     <template slot="title">行情大数据展示</template>
 
@@ -92,7 +92,6 @@
         :color-title="colorTitle">
       </pie>
     </template>
-
   </layout>
 </template>
 

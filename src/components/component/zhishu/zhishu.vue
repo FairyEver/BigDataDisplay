@@ -62,8 +62,8 @@ export default {
   color: rgb(49, 175, 139);
   font-size: 24px;
   font-weight: bold;
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 60px;
+  margin-bottom: 10px;
 }
 .container {
   display: flex;
