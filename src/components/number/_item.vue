@@ -5,6 +5,7 @@
       {{label}}
     </p>
     <p class="text value" :style="styleValue" ref="count"></p>
+    <p class="text label" :style="styleLabel">{{dw}}</p>
   </div>
 </template>
 
@@ -14,6 +15,7 @@ export default {
   props: {
     label: { default: 'label' },
     value: { default: 100 },
+    dw: { default: '' },
     color: { default: 'red' },
     // 额外设置项
     point: { default: true },

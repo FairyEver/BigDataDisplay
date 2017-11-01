@@ -4,6 +4,7 @@
       v-for="(item, index) in data"
       :key="index"
       :label="item.label"
+      :dw="dw[index]"
       :value="item.value"
       :color="color[index]"
       :min-width="minWidth">
@@ -36,6 +37,14 @@ export default {
     },
     size: {
       default: () => null
+    },
+    // 单位
+    dw: {
+      default: () => [
+        '单位1',
+        '单位2',
+        '单位3'
+      ]
     }
   },
   computed: {
@@ -43,7 +52,7 @@ export default {
       if ((this.size === null) || (this.size.width === 0)) {
         return 100
       } else {
-        return this.size.width / 4
+        return this.size.width / this.data.length
       }
     }
   }
