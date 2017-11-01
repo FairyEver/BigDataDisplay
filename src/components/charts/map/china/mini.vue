@@ -100,6 +100,16 @@ export default {
         height: this.size.height + 'px',
         width: this.size.width + 'px'
       }
+    },
+    visualMapMax () {
+      // 左下角的数值设置最大值 这个最大值应该等于数据的最大项
+      let max = 0
+      this.data.forEach(e => {
+        if (max < Number(e.value)) {
+          max = Number(e.value)
+        }
+      })
+      return max
     }
   },
   watch: {
@@ -155,6 +165,7 @@ export default {
     },
     updateOption () {
       // 更新option设置
+      this.option.visualMap.max = this.visualMapMax
       this.option.series[0].mapType = this.mapType
       this.option.series[0].data = this.data
     },

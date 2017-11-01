@@ -8,7 +8,7 @@
     :h-item-l1="280"
     :h-item-r1="280">
 
-    <template slot="title">行情大数据展示</template>
+    <template slot="title">智慧蛋鸡行业大数据展示</template>
 
     <template slot="l1">
       <bar
@@ -30,7 +30,7 @@
     </template>
     <template slot="l3">
       <pie
-        name="全国养殖户学历分布"
+        name="全国养殖从业年限区间分布"
         :ready="layoutReady"
         :size="offsetSize.l3"
         :data="yangZhiHuXueLi"
@@ -50,7 +50,10 @@
       </map-x>
     </template>
     <template slot="c2">
-      <number-x :data="mapInfo"></number-x>
+      <number-x
+        :data="mapInfo"
+        :size="offsetSize.c2">
+      </number-x>
     </template>
 
     <template slot="r1">

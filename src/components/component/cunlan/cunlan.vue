@@ -7,6 +7,7 @@
         <item
           label="产蛋量"
           :value="info.cd"
+          :dw="'单位1'"
           color="#DB5F52"
           :point="point"
           :label-size="labelSize"
@@ -16,6 +17,7 @@
         <item
           label="日耗料"
           :value="info.hl"
+          :dw="'单位2'"
           color="#D69E41"
           :point="point"
           :label-size="labelSize"
@@ -25,16 +27,8 @@
         <item
           label="淘汰鸡"
           :value="info.tt"
+          :dw="'单位3'"
           color="#58BCA0"
-          :point="point"
-          :label-size="labelSize"
-          :value-size="valueSize"
-          :minWidth="60">
-        </item>
-        <item
-          label="疫苗"
-          :value="info.ym"
-          color="#A35EDA"
           :point="point"
           :label-size="labelSize"
           :value-size="valueSize"
@@ -97,7 +91,7 @@ export default {
     return {
       point: false,
       labelSize: 12,
-      valueSize: 26
+      valueSize: 24
     }
   },
   computed: {

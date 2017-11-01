@@ -57,9 +57,9 @@ let dataBuilder = () => {
     ]
     // r3使用
     e.r3 = [
-      {name: '红壳蛋鸡', value: Math.round(Math.random() * 100) + 50},
-      {name: '粉壳蛋鸡', value: Math.round(Math.random() * 100) + 50},
-      {name: '白壳蛋鸡', value: Math.round(Math.random() * 100) + 50}
+      {name: '<2年', value: Math.round(Math.random() * 100) + 50},
+      {name: '2-5年', value: Math.round(Math.random() * 100) + 50},
+      {name: '5-10年', value: Math.round(Math.random() * 100) + 50}
     ]
     return _e
   })

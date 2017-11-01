@@ -10,7 +10,7 @@
     :h-item-l1="280"
     :h-item-r1="280">
 
-    <template slot="title">行情大数据展示</template>
+    <template slot="title">智慧蛋鸡行业大数据展示</template>
 
     <template slot="l1">
       <bar
@@ -42,7 +42,7 @@
 
     <template slot="c1">
       <map-x
-        :name="rName + '蛋鸡存栏: ' + r1Value + ' 只'"
+        :name="mapTitle"
         :ready="layoutReady"
         :size="offsetSize.c1"
         :data="dataMapFilted"
@@ -202,9 +202,13 @@ export default {
       return [
         { label: '产蛋量', value: data.cd },
         { label: '日耗料', value: data.hl },
-        { label: '淘汰鸡', value: data.tt },
-        { label: '疫苗', value: data.ym }
+        { label: '淘汰鸡', value: data.tt }
       ]
+    },
+    // 地图的标题
+    mapTitle () {
+      let data = this.cunLanInfoChina.filter(e => e.name === this.dataNavActive)[0]
+      return '存栏' + data.cl + '万只'
     },
     rType () {
       // 右侧有所卡片共享的数据分类 比如'红壳蛋鸡'
