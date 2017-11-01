@@ -131,6 +131,16 @@ export default {
         height: this.size.height + 'px',
         width: this.size.width + 'px'
       }
+    },
+    visualMapMax () {
+      // 左下角的数值设置最大值 这个最大值应该等于数据的最大项
+      let max = 0
+      this.data.forEach(e => {
+        if (max < Number(e.value)) {
+          max = Number(e.value)
+        }
+      })
+      return max
     }
   },
   watch: {
@@ -255,8 +265,7 @@ export default {
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
         // 更新设置
-        this.option.title.text = this.name
-        this.option.series[0].data = this.data
+        this.updateOption()
         // 重新设置图表
         this.chart.setOption(this.option)
         let _this = this
@@ -275,16 +284,17 @@ export default {
         console.log(`map/china/simple [${this.name}] [图表实例化完毕]`)
       })
     },
+    updateOption () {
+      // 更新option设置
+      this.option.visualMap.max = this.visualMapMax
+      this.option.title.text = this.name
+      this.option.series[0].data = this.data
+    },
     refresh () {
       // 更新
       this.$nextTick(() => {
         // 更新设置
-        let allCount = 0
-        this.data.forEach(e => {
-          allCount = allCount + Number(e.value)
-        })
-        this.option.title.text = this.name
-        this.option.series[0].data = this.data
+        this.updateOption()
         // 重新设置图表
         this.chart.setOption(this.option)
         this.activeMap(this.selectedMap)
