@@ -361,7 +361,8 @@ export default {
   text-align: center;
   background: #32363F;
   margin-left: 10px;
-  padding: 5px 2px;
+  margin-right: 5px;
+  padding: 5px 1px;
   width: 70px;
   color: #fff;
   font-size: 14px;
@@ -370,7 +371,8 @@ export default {
   text-align: center;
   background: #117b79;
   margin-left: 10px;
-  padding: 5px 2px;
+  margin-right: 5px;
+  padding: 5px 1px;
   width: 70px;
   color: #fff;
   font-size: 14px;
@@ -379,7 +381,7 @@ export default {
   text-align: center;
   background: #32363F;
   margin-left: 10px;
-  padding: 5px 2px;
+  padding: 5px 1px;
   width: 25px;
   color: #fff;
   font-size: 14px;
@@ -388,7 +390,7 @@ export default {
   text-align: center;
   background: #117b79;
   margin-left: 10px;
-  padding: 5px 2px;
+  padding: 5px 1px;
   width: 25px;
   color: #fff;
   font-size: 14px;

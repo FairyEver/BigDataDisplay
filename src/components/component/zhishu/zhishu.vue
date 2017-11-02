@@ -49,7 +49,7 @@ export default {
     },
     itemStyle () {
       return {
-        height: this.size.width / 3 - 16 + 'px',
+        height: this.size.width / 3 - 32 + 'px',
         width: this.size.width / 3 + 'px'
       }
     }
@@ -76,7 +76,7 @@ export default {
   display: flex;
   text-align: center;
   .item {
-    padding-top: 5px;
+    padding-top: 20px;
     .item-title {
       color: #02fdea;
       font-size: 18px;
@@ -88,11 +88,12 @@ export default {
     }
     .item-float {
       font-size: 12px;
+      font-weight: bold;
     }
   }
   .item-active {
     background: #117b79;
-    padding-top: 5px;
+    padding-top: 20px;
     .item-title {
       color: #fff;
       font-size: 18px;
