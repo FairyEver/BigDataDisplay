@@ -3,8 +3,6 @@
     :auto-play.sync="autoPlay"
     :nav="nav"
     :nav-active.sync="navActive"
-    :data-nav="dataNav"
-    :data-nav-active.sync="dataNavActive"
     :offset-size.sync="offsetSize"
     :layout-ready.sync="layoutReady"
     :h-item-l1="190"
@@ -70,9 +68,11 @@
         @playRound="mapPlayRound">
       </map-x>
     </template>
-    <!-- <template slot="c2">
-      <number-x :data="mapInfo"></number-x>
-    </template> -->
+    <template slot="c2">
+      <div class="legend"><span class="legend-point1">●</span> 蛋价区域</div>
+      <div class="legend"><span class="legend-point2">●</span> 成本区域</div>
+      <div class="legend"><span class="legend-point3">●</span> 盈利区域</div>
+    </template>
 
     <template slot="r1">
       <zhishu
@@ -125,7 +125,7 @@
 
 <script>
 // [组件] 主布局
-import layout from '@/components/layout/2/index.vue'
+import layout from '@/components/layout/3/index.vue'
 import zhishu from '@/components/component/zhishu/zhishu.vue'
 import mapX from '@/components/charts/map/china/simple3.vue'
 import numberX from '@/components/number/index.vue'
@@ -188,14 +188,6 @@ export default {
         { label: '蛋鸡存栏', value: 'page1' },
         { label: '养殖户分布', value: 'page2' },
         { label: '行情数据', value: 'page3' }
-      ],
-      // 数据导航栏
-      dataNavActive: 'all',
-      dataNav: [
-        { label: '全部', value: 'all' },
-        { label: '红壳蛋鸡', value: 'hong' },
-        { label: '白壳蛋鸡', value: 'bai' },
-        { label: '粉壳蛋鸡', value: 'fen' }
       ],
       // 数据 地图
       dataMap,
@@ -433,6 +425,20 @@ export default {
   padding: 3px 10px;
   font-size: 16px;
   display: inline-block;
+}
+.legend {
+  background: rgba(13, 17, 26, 0.5);
+  padding: 5px 10px;
+  margin: 0 3px;
+  .legend-point1 {
+    color: #f4e925;
+  }
+  .legend-point2 {
+    color: #7bd93d;
+  }
+  .legend-point3 {
+    color: #dc5ac7;
+  }
 }
 </style>
 

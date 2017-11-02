@@ -59,6 +59,15 @@ export default {
           // trigger: 'item',
           // formatter: '{c0}'
         },
+        legend: {
+          orient: 'vertical',
+          y: 'bottom',
+          x: 'right',
+          data: ['蛋价区域'],
+          textStyle: {
+            color: '#fff'
+          }
+        },
         visualMap: {
           type: 'continuous',
           show: true,
@@ -93,6 +102,7 @@ export default {
             right: 50,
             itemStyle: {
               normal: {
+                color: '#f4e925',
                 areaColor: 'rgba(0,0,0,0)',
                 label: {
                   show: false
@@ -258,7 +268,7 @@ export default {
         this.data.forEach(e => {
           allCount = allCount + Number(e.value)
         })
-        this.option.title.text = '全国存栏' + Math.round(allCount) + '万只'
+        this.option.title.text = ''
         this.option.series[0].data = this.data
         // 重新设置图表
         this.chart.setOption(this.option)
