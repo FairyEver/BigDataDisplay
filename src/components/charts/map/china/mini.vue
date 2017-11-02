@@ -18,7 +18,9 @@ export default {
       }
     },
     // 地图类型 默认是全国地图
-    mapType: { default: 'china' }
+    mapType: { default: 'china' },
+    // 单位
+    dw: { default: '' }
   },
   data () {
     return {
@@ -34,7 +36,7 @@ export default {
               return '暂时没有数据'
             } else {
               // 有数据
-              return params.value + '万只'
+              return params.value + this.dw
             }
           }
         },

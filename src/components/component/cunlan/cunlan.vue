@@ -1,8 +1,8 @@
 <template>
   <div :style="style" class="body">
-    <div class="title" :style="styleColor">{{name}} {{value}}万只</div>
+    <div class="title" :style="styleColor">{{name}} {{value}}{{dw}}</div>
     <div class="content">
-      <div class="info">
+      <div class="info" v-if="type === 1">
         <!-- 数字信息 -->
         <item
           label="年产蛋"
@@ -36,13 +36,48 @@
         </item>
         <!-- 数字信息 结束 -->
       </div>
+      <div class="info" v-if="type === 2">
+        <!-- 养殖户信息 -->
+        <div class="type2item">
+          <pie
+            :data="info.hong"
+            :ready="ready"
+            :size="sizePie"
+            :color-dark="'#850C00'"
+            :color-light="'#F26355'">
+          </pie>
+          <div class="type2title" :style="styleColor">红壳占比</div>
+        </div>
+        <div class="type2item">
+          <pie
+            :data="info.bai"
+            :ready="ready"
+            :size="sizePie"
+            :color-dark="'#806400'"
+            :color-light="'#FFD848'">
+          </pie>
+          <div class="type2title" :style="styleColor">白壳占比</div>
+        </div>
+        <div class="type2item">
+          <pie
+            :data="info.fen"
+            :ready="ready"
+            :size="sizePie"
+            :color-dark="'#005F3F'"
+            :color-light="'#5AEBBA'">
+          </pie>
+          <div class="type2title" :style="styleColor">粉壳占比</div>
+        </div>
+        <!-- 养殖户信息 结束 -->
+      </div>
       <div class="map" ref="map">
         <map-x
           :name="name"
           :ready="ready"
           :size="{height:mapHeight, width:mapWidth}"
           :data="map"
-          :map-type="mapType">
+          :map-type="mapType"
+          :dw="dw">
         </map-x>
       </div>
     </div>
@@ -52,10 +87,12 @@
 <script>
 import item from '@/components/number/_item.vue'
 import mapX from '@/components/charts/map/china/mini.vue'
+import pie from '@/components/charts/pie/type2.vue'
 export default {
   components: {
     item,
-    mapX
+    mapX,
+    pie
   },
   props: {
     name: { default: '' },
@@ -68,6 +105,7 @@ export default {
         }
       }
     },
+    type: { default: 1 },
     province: { default: '河北' },
     // 下面就不是地图相关的了
     value: { default: 0 },
@@ -85,7 +123,17 @@ export default {
       default: () => []
     },
     // 样式设置
-    colorTitle: { default: '#FFF' }
+    colorTitle: { default: '#FFF' },
+    dw: { default: '' },
+    // 小饼图尺寸
+    sizePie: {
+      default: () => {
+        return {
+          height: 50,
+          width: 50
+        }
+      }
+    }
   },
   data () {
     return {
@@ -176,6 +224,11 @@ $widthInfo: 110px;
       justify-content: space-around;
       align-items: center;
       flex-direction: column;
+      .type2item{
+        .type2title{
+          font-size: 10px;
+        }
+      }
     }
     .map{
       position: absolute;

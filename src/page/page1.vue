@@ -68,7 +68,8 @@
         :info="r1Info"
         :map="pieceMapFilted"
         :province="rName"
-        :color-title="colorTitle">
+        :color-title="colorTitle"
+        :dw="'万只'">
       </cunlan-info>
     </template>
     <template slot="r2">

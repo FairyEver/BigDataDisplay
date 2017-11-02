@@ -58,14 +58,16 @@
 
     <template slot="r1">
       <cunlan-info
-        :name="rName + '养殖户分布'"
+        :type="2"
+        :name="rName + '养殖户'"
         :ready="layoutReady"
         :size="offsetSize.r1"
         :value="r1Value"
         :info="r1Info"
         :map="pieceMapFilted"
         :province="rName"
-        :color-title="colorTitle">
+        :color-title="colorTitle"
+        :dw="'万人'">
       </cunlan-info>
     </template>
     <template slot="r2">
@@ -140,10 +142,9 @@ export default {
       rName: '',
       // 每个地区的详细数据 r1
       r1Info: {
-        cd: 0,
-        hl: 0,
-        tt: 0,
-        ym: 0
+        hong: 0,
+        bai: 0,
+        fen: 0
       },
       r1Value: 0
     }
@@ -240,10 +241,6 @@ export default {
       this.$router.push({
         name: value
       })
-    },
-    dataNavActive (value) {
-      // 数据导航的值发生变化
-      this.refreshR1Data(this.keHuChina.filter(e => e.name === this.rName)[0][value])
     }
   },
   mounted () {
@@ -261,12 +258,22 @@ export default {
     },
     refreshR1Data (value) {
       // 更新r1相关的数据
-      this.r1Info = {
-        cd: 0,
-        hl: 0,
-        tt: 0,
-        ym: 0
+      this.r1Value = value
+      let data = this.keHuChina.find(e => e.name === this.rName)
+      let hong = Number(data.hong)
+      let fen = Number(data.fen)
+      let bai = Number(data.bai)
+      let all = hong + fen + bai
+      let _hong = Math.round(hong / all * 100)
+      let _fen = Math.round(fen / all * 100)
+      let _bai = 100 - _hong - _fen
+      let res = {
+        hong: _hong,
+        fen: _fen,
+        bai: _bai
       }
+      console.log(res)
+      this.r1Info = res
     },
     mapClick (params) {
       // 更新地图下面的数据

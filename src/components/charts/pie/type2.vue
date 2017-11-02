@@ -47,11 +47,11 @@ export default {
             },
             itemStyle: {
               normal: {
-                borderWidth: 2,
+                borderWidth: 0,
                 borderColor: this.colorDark
               },
               emphasis: {
-                borderWidth: 2,
+                borderWidth: 0,
                 borderColor: this.colorDark
               }
             }
