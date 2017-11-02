@@ -51,6 +51,7 @@
     </template>
     <template slot="c2">
       <number-x
+        :type="2"
         :data="mapInfo"
         :size="offsetSize.c2">
       </number-x>
@@ -194,15 +195,18 @@ export default {
     mapInfo () {
       // 传递给中间下部分 红壳蛋鸡，白壳蛋鸡，粉壳蛋鸡和其他蛋鸡的养殖户占总养殖户百分比
       let all = this.counter('keHuChina', 'all')
+      let hong = Math.round(this.counter('keHuChina', 'hong') / all * 100)
+      let bai = Math.round(this.counter('keHuChina', 'bai') / all * 100)
       return [
-        { label: '红壳蛋鸡养殖户', value: this.counter('keHuChina', 'hong') / all * 100 },
-        { label: '白壳蛋鸡养殖户', value: this.counter('keHuChina', 'bai') / all * 100 },
-        { label: '粉壳蛋鸡养殖户', value: this.counter('keHuChina', 'fen') / all * 100 }
+        { label: '红壳蛋鸡养殖户', value: hong },
+        { label: '白壳蛋鸡养殖户', value: bai },
+        { label: '粉壳蛋鸡养殖户', value: 100 - hong - bai }
       ]
     },
     // 地图的标题
     mapTitle () {
-      return '养殖户xxxx人'
+      let data = this.counter('keHuChina', 'all')
+      return '养殖户' + data + '万人'
     },
     r2Data () {
       // r2数据 养殖户年龄分布

@@ -9,7 +9,6 @@ export default {
   props: {
     name: { default: '未命名图表' },
     data: { default: () => 30 },
-    ready: { default: false },
     size: {
       default: () => {
         return {
@@ -20,18 +19,34 @@ export default {
     },
     // 样式设置
     colorDark: { default: '#341F24' },
-    colorLight: { default: '#DB5F52' }
+    colorLight: { default: '#DB5F52' },
+    // 中间的字体大小
+    fontSize: { default: 14 },
+    // 圆环的参数
+    radius: {
+      default: () => ['60%', '80%']
+    }
   },
   data () {
     return {
       chart: null,
       option: {
+        title: {
+          text: '%',
+          x: 'center',
+          y: 'center',
+          textStyle: {
+            fontWeight: 'normal',
+            color: this.colorLight,
+            fontSize: 14
+          }
+        },
         series: [
           {
             name: '订单数量',
             type: 'pie',
             hoverAnimation: false,
-            radius: '80%',
+            radius: ['60%', '80%'],
             center: ['50%', '50%'],
             clockwise: false,
             data: [],
@@ -91,12 +106,6 @@ export default {
     }
   },
   watch: {
-    ready (value) {
-      if (value) {
-        console.log(`map/china/simple [${this.name}] [watch: ready is ${value}]`)
-        this.init()
-      }
-    },
     size (value) {
       console.log(`pie/type2 [${this.name}] [组件尺寸变化 ${value.height}*${value.width}]`)
       if (this.chart === null) {
@@ -112,6 +121,7 @@ export default {
   },
   mounted () {
     console.log(`pie/type2 [${this.name}] [mounted]`)
+    this.init()
   },
   methods: {
     dispose () {
@@ -123,7 +133,7 @@ export default {
       // 初始化
       this.$nextTick(() => {
         this.chart = echarts.init(this.$refs.chart)
-        this.option.series[0].data = this.dataComputed
+        this.refreshOption()
         this.chart.setOption(this.option)
         console.log(`pie/type2 [${this.name}] [图表实例化完毕]`)
       })
@@ -131,9 +141,15 @@ export default {
     refresh () {
       // 更新
       this.$nextTick(() => {
-        this.option.series[0].data = this.dataComputed
+        this.refreshOption()
         this.chart.setOption(this.option)
       })
+    },
+    refreshOption () {
+      this.option.title.text = this.data + '%'
+      this.option.title.textStyle.fontSize = this.fontSize
+      this.option.series[0].radius = this.radius
+      this.option.series[0].data = this.dataComputed
     }
   }
 }

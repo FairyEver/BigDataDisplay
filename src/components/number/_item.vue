@@ -1,27 +1,54 @@
 <template>
   <div class="item" :style="itemStyle">
-    <p class="text label" :style="styleLabel">
-      <span v-if="point" :style="styleBG"></span>
-      {{label}}
-    </p>
-    <p class="text value" :style="styleValue" ref="count"></p>
-    <p class="text label" :style="styleLabel">{{dw}}</p>
+    <template v-if="type === 1">
+      <p class="text label" :style="styleLabel">
+        <span v-if="point" :style="styleBG"></span>
+        {{label}}
+      </p>
+      <p class="text value" :style="styleValue" ref="count"></p>
+      <p class="text label" :style="styleLabel">{{dw}}</p>  
+    </template>
+    <template v-if="type === 2">
+      <pie
+        :data="value"
+        :size="sizePie"
+        :color-dark="'#0C1019'"
+        :color-light="color">
+      </pie>
+      <p class="text label" :style="styleLabel">
+        {{label}}
+      </p>
+    </template>
   </div>
 </template>
 
 <script>
 import Counter from 'countup.js'
+import pie from '@/components/charts/pie/type2.vue'
 export default {
+  components: {
+    pie
+  },
   props: {
+    type: { default: 1 },
     label: { default: 'label' },
-    value: { default: 100 },
+    value: { default: null },
     dw: { default: '' },
     color: { default: 'red' },
     // 额外设置项
     point: { default: false },
     labelSize: { default: 14 },
     valueSize: { default: 42 },
-    minWidth: { default: 160 }
+    minWidth: { default: 160 },
+    // pie
+    sizePie: {
+      default: () => {
+        return {
+          height: 80,
+          width: 80
+        }
+      }
+    }
   },
   data () {
     return {
@@ -71,23 +98,18 @@ export default {
   },
   mounted () {
     this.init()
-    this.start()
   },
   methods: {
     init () {
-      var options = {
-        useEasing: true,
-        useGrouping: true,
-        separator: ',',
-        decimal: '.'
-      }
-      this.counterObj = new Counter(this.$refs.count, 0, this.value, 0, 1, options)
-    },
-    start () {
-      if (!this.counterObj.error) {
+      if (this.type === 1) {
+        var options = {
+          useEasing: true,
+          useGrouping: true,
+          separator: ',',
+          decimal: '.'
+        }
+        this.counterObj = new Counter(this.$refs.count, 0, this.value, 0, 1, options)
         this.counterObj.start()
-      } else {
-        console.error(this.counterObj.error)
       }
     }
   }
@@ -97,11 +119,13 @@ export default {
 <style lang="scss" scoped>
 .item{
   margin: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   .text{
     padding: 0px;
     margin: 0px;
-    text-align: center;
-    display: block;
     span{
       display: inline-block;
       height: 10px;

@@ -41,30 +41,33 @@
         <div class="type2item">
           <pie
             :data="info.hong"
-            :ready="ready"
             :size="sizePie"
             :color-dark="'#850C00'"
-            :color-light="'#F26355'">
+            :color-light="'#F26355'"
+            :font-size="10"
+            :radius="['70%', '80%']">
           </pie>
           <div class="type2title" :style="styleColor">红壳占比</div>
         </div>
         <div class="type2item">
           <pie
             :data="info.bai"
-            :ready="ready"
             :size="sizePie"
             :color-dark="'#806400'"
-            :color-light="'#FFD848'">
+            :color-light="'#FFD848'"
+            :font-size="10"
+            :radius="['70%', '80%']">
           </pie>
           <div class="type2title" :style="styleColor">白壳占比</div>
         </div>
         <div class="type2item">
           <pie
             :data="info.fen"
-            :ready="ready"
             :size="sizePie"
             :color-dark="'#005F3F'"
-            :color-light="'#5AEBBA'">
+            :color-light="'#5AEBBA'"
+            :font-size="10"
+            :radius="['70%', '80%']">
           </pie>
           <div class="type2title" :style="styleColor">粉壳占比</div>
         </div>

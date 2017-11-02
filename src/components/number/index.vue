@@ -3,6 +3,7 @@
     <item
       v-for="(item, index) in data"
       :key="index"
+      :type="type"
       :label="item.label"
       :dw="dw[index]"
       :value="item.value"
@@ -19,20 +20,19 @@ export default {
     item
   },
   props: {
+    type: { default: 1 },
     color: {
       default: () => [
         '#E6E09F',
         '#90DEF5',
-        '#4F9CE0',
-        '#12B9CD'
+        '#4F9CE0'
       ]
     },
     data: {
       default: () => [
         { label: 'lable1', value: '0000' },
         { label: 'lable2', value: '0000' },
-        { label: 'lable3', value: '0000' },
-        { label: 'lable4', value: '0000' }
+        { label: 'lable3', value: '0000' }
       ]
     },
     size: {
