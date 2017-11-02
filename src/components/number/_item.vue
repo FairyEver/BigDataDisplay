@@ -18,7 +18,7 @@ export default {
     dw: { default: '' },
     color: { default: 'red' },
     // 额外设置项
-    point: { default: true },
+    point: { default: false },
     labelSize: { default: 14 },
     valueSize: { default: 42 },
     minWidth: { default: 160 }

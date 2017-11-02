@@ -12,7 +12,7 @@
 
     <template slot="l1">
       <bar
-        name="养殖户排名"
+        name="全国养殖户户数TOP10"
         :ready="layoutReady"
         :size="offsetSize.l1"
         :data="dataTop10"
@@ -24,23 +24,23 @@
         name="全国养殖户年龄分布"
         :ready="layoutReady"
         :size="offsetSize.l2"
-        :data="yangZhiHuNianLingFenBu"
+        :data="dataL2"
         :color-title="colorTitle">
       </bar-col>
     </template>
     <template slot="l3">
       <pie
-        name="全国养殖从业年限区间分布"
+        name="全国养殖户从业年限分布"
         :ready="layoutReady"
         :size="offsetSize.l3"
-        :data="yangZhiHuXueLi"
+        :data="dataL3"
         :color-title="colorTitle">
       </pie>
     </template>
 
     <template slot="c1">
       <map-x
-        :name="rName + '养殖户: ' + r1Value + ' 人'"
+        :name="mapTitle"
         :ready="layoutReady"
         :size="offsetSize.c1"
         :data="dataMapFilted"
@@ -58,26 +58,28 @@
 
     <template slot="r1">
       <cunlan-info
-        :name="rName + '养殖户数据'"
+        :name="rName + '养殖户分布'"
+        :ready="layoutReady"
         :size="offsetSize.r1"
         :value="r1Value"
         :info="r1Info"
+        :map="pieceMapFilted"
         :province="rName"
         :color-title="colorTitle">
       </cunlan-info>
     </template>
     <template slot="r2">
-      <bar-col
+      <pie
         :name="rName + '养殖户年龄分布'"
         :ready="layoutReady"
         :size="offsetSize.r2"
         :data="r2Data"
         :color-title="colorTitle">
-      </bar-col>
+      </pie>
     </template>
     <template slot="r3">
       <pie
-        :name="rName + '养殖户学历分布'" 
+        :name="rName + '养殖户从业年限分布'"
         :ready="layoutReady"
         :size="offsetSize.r3"
         :data="r3Data"
@@ -98,11 +100,11 @@ import barCol from '@/components/charts/bar/col.vue'
 import pie from '@/components/charts/pie/type1.vue'
 import cunlanInfo from '@/components/component/cunlan/cunlan.vue'
 
-// 数据
-import dataMap from '@/data/old/page2/地图数据.js'
-import dataTop10 from '@/data/old/page2/养殖户排名.js'
-import yangZhiHuNianLingFenBu from '@/data/old/page2/全国养殖户年龄分布.js'
-import yangZhiHuXueLi from '@/data/old/page2/全国养殖户学历分布.js'
+// 下面是新的数据
+import keHuChina from '@/data/new/page2/全国客户.js'
+import keHuPiece from '@/data/new/page2/地区客户.js'
+import nianLing from '@/data/new/page2/年龄分布.js'
+import congYe from '@/data/new/page2/从业年限.js'
 
 export default {
   components: {
@@ -116,6 +118,11 @@ export default {
   },
   data () {
     return {
+      // 新版数据
+      keHuChina,
+      keHuPiece,
+      nianLing,
+      congYe,
       // 自动播放
       autoPlay: false,
       // 布局尺寸
@@ -129,14 +136,6 @@ export default {
         { label: '蛋鸡存栏', value: 'page1' },
         { label: '养殖户分布', value: 'page2' }
       ],
-      // 数据 地图
-      dataMap,
-      // 数据 top10 l1
-      dataTop10,
-      // 全国存栏分布 l2
-      yangZhiHuNianLingFenBu,
-      // 全国品种占比 l3
-      yangZhiHuXueLi,
       // 右侧有所卡片共享的地区名称
       rName: '',
       // 每个地区的详细数据 r1
@@ -146,37 +145,93 @@ export default {
         tt: 0,
         ym: 0
       },
-      r1Value: 0,
-      // 每个地区的存栏区间分布 r2
-      r2Data: [
-        // {name: 'A', value: '12320'},
-        // {name: 'B', value: '34512'},
-        // {name: 'C', value: '23482'},
-        // {name: 'D', value: '23789'}
-      ],
-      // 品种占比 r3
-      r3Data: [
-        // {name: 'A', value: '12320'},
-        // {name: 'B', value: '34512'},
-        // {name: 'C', value: '23482'},
-        // {name: 'D', value: '23789'}
-      ]
+      r1Value: 0
     }
   },
   computed: {
+    dataL3 () {
+      // 全国从业年限分布
+      return [
+        {name: '2年以下', value: this.counter('congYe', '2')},
+        {name: '2-5年', value: this.counter('congYe', '2-5')},
+        {name: '5-10年', value: this.counter('congYe', '5-10')},
+        {name: '10-15年', value: this.counter('congYe', '10-15')},
+        {name: '15年以上', value: this.counter('congYe', '15')}
+      ]
+    },
+    dataL2 () {
+      // 全国年龄分布
+      return [
+        {name: '30岁以下', value: this.counter('nianLing', '30')},
+        {name: '30-40岁', value: this.counter('nianLing', '30-40')},
+        {name: '40-50岁', value: this.counter('nianLing', '40-50')},
+        {name: '50-60岁', value: this.counter('nianLing', '50-60')},
+        {name: '60岁以上', value: this.counter('nianLing', '60')}
+      ]
+    },
+    dataTop10 () {
+      return this.keHuChina.sort((a, b) => Number(a.all) - Number(b.all)).slice(-10).map(e => ({name: e.name, value: e.all}))
+    },
+    pieceMapFilted () {
+      // r1 地图数据
+      if (this.rName) {
+        let data = this.keHuPiece.find(e => e.name === this.rName)
+        return data.value
+      } else {
+        return []
+      }
+    },
     dataMapFilted () {
-      // 地图数据
-      return this.dataMap.mapData
+      // 地图数据 这个计算属性会传递给地图
+      return this.keHuChina.map(e => {
+        return {
+          name: e.name,
+          value: e.all
+        }
+      })
     },
     mapInfo () {
-      // 中间下部分地图信息 根据地图右侧的控制器切换
-      let mapInfo = this.dataMap.mapInfo
+      // 传递给中间下部分 红壳蛋鸡，白壳蛋鸡，粉壳蛋鸡和其他蛋鸡的养殖户占总养殖户百分比
+      let all = this.counter('keHuChina', 'all')
       return [
-        { label: '产蛋量', value: mapInfo.cd },
-        { label: '日耗料', value: mapInfo.hl },
-        { label: '淘汰鸡', value: mapInfo.tt },
-        { label: '疫苗', value: mapInfo.tm }
+        { label: '红壳蛋鸡养殖户', value: this.counter('keHuChina', 'hong') / all * 100 },
+        { label: '白壳蛋鸡养殖户', value: this.counter('keHuChina', 'bai') / all * 100 },
+        { label: '粉壳蛋鸡养殖户', value: this.counter('keHuChina', 'fen') / all * 100 }
       ]
+    },
+    // 地图的标题
+    mapTitle () {
+      return '养殖户xxxx人'
+    },
+    r2Data () {
+      // r2数据 养殖户年龄分布
+      if (this.rName) {
+        let data = this.nianLing.find(e => e.name === this.rName)
+        return [
+          {name: '30岁以下', value: data['30']},
+          {name: '30-40岁', value: data['30-40']},
+          {name: '40-50岁', value: data['40-50']},
+          {name: '50-60岁', value: data['50-60']},
+          {name: '60岁以上', value: data['60']}
+        ]
+      } else {
+        return []
+      }
+    },
+    r3Data () {
+      // r3数据 养殖户从业年限分布
+      if (this.rName) {
+        let data = this.congYe.find(e => e.name === this.rName)
+        return [
+          {name: '2年以下', value: data['2']},
+          {name: '2-5年', value: data['2-5']},
+          {name: '5-10年', value: data['5-10']},
+          {name: '10-15年', value: data['10-15']},
+          {name: '15年以上', value: data['15']}
+        ]
+      } else {
+        return []
+      }
     }
   },
   watch: {
@@ -185,30 +240,42 @@ export default {
       this.$router.push({
         name: value
       })
+    },
+    dataNavActive (value) {
+      // 数据导航的值发生变化
+      this.refreshR1Data(this.keHuChina.filter(e => e.name === this.rName)[0][value])
     }
   },
   mounted () {
     if (this.$route.params.autoPlay) {
       this.autoPlay = true
     }
+    console.log(this.mapInfo)
   },
   methods: {
+    counter (arrName, keyName) {
+      // 工具方法 传递数组名和key值 返回累加和
+      let temp = 0
+      this[arrName].forEach(e => { temp += Number(e[keyName]) })
+      return temp
+    },
+    refreshR1Data (value) {
+      // 更新r1相关的数据
+      this.r1Info = {
+        cd: 0,
+        hl: 0,
+        tt: 0,
+        ym: 0
+      }
+    },
     mapClick (params) {
-      // console.log(params)
       // 更新地图下面的数据
       if (params.data) {
         let data = params.data
         // r
         this.rName = data.name
         // r1
-        this.r1Info = data.r1
-        this.r1Value = data.value
-        // r2
-        console.log('----')
-        this.r2Data = data.r2
-        console.log(this.r2Data)
-        // r3
-        this.r3Data = data.r3
+        this.refreshR1Data(data.value)
       } else {
         // r
         this.rName = ''
@@ -220,10 +287,6 @@ export default {
           ym: 0
         }
         this.r1Value = 0
-        // r2
-        this.r2Data = []
-        // r3
-        this.r3Data = []
       }
     },
     mapPlayRound () {

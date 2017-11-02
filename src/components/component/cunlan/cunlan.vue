@@ -5,9 +5,9 @@
       <div class="info">
         <!-- 数字信息 -->
         <item
-          label="产蛋量"
+          label="年产蛋"
           :value="info.cd"
-          :dw="'单位1'"
+          :dw="'万吨'"
           color="#DB5F52"
           :point="point"
           :label-size="labelSize"
@@ -15,9 +15,9 @@
           :minWidth="60">
         </item>
         <item
-          label="日耗料"
+          label="年耗料"
           :value="info.hl"
-          :dw="'单位2'"
+          :dw="'万吨'"
           color="#D69E41"
           :point="point"
           :label-size="labelSize"
@@ -25,9 +25,9 @@
           :minWidth="60">
         </item>
         <item
-          label="淘汰鸡"
+          label="年淘汰鸡"
           :value="info.tt"
-          :dw="'单位3'"
+          :dw="'万只'"
           color="#58BCA0"
           :point="point"
           :label-size="labelSize"

@@ -82,7 +82,7 @@ export default {
           }
         },
         yAxis: {
-          data: this.data.map(e => e.name).reverse(),
+          data: this.data.map(e => e.name),
           axisLine: {
             // 坐标轴
             lineStyle: {
@@ -101,7 +101,6 @@ export default {
         },
         xAxis: {
           position: 'top',
-          interval: 500,
           axisLine: {
             // 坐标轴
             lineStyle: {
@@ -127,7 +126,7 @@ export default {
         series: [
           {
             type: 'bar',
-            data: this.data.reverse(),
+            data: this.data,
             barWidth: 10,
             itemStyle: {
               normal: {

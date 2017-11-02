@@ -54,6 +54,7 @@
     <template slot="c2">
       <number-x
         :data="mapInfo"
+        :dw="['万吨', '万吨', '万只']"
         :size="offsetSize.c2">
       </number-x>
     </template>
@@ -101,12 +102,6 @@ import bar from '@/components/charts/bar/row.vue'
 import pie from '@/components/charts/pie/type1.vue'
 import cunlanInfo from '@/components/component/cunlan/cunlan.vue'
 
-// 数据
-import dataMap from '@/data/old/page1/地图数据.js'
-import dataTop10 from '@/data/old/page1/全国存栏量.js'
-import cunLanFenBu from '@/data/old/page1/全国存栏区间分布.js'
-import pinZhongZhanBi from '@/data/old/page1/全国品种占比.js'
-
 // 下面是新的数据
 import pinZhongChina from '@/data/new/page1/全国品种.js'
 import pinZhongPiece from '@/data/new/page1/地区品种.js'
@@ -152,27 +147,49 @@ export default {
         { label: '白壳蛋鸡', value: 'bai' },
         { label: '粉壳蛋鸡', value: 'fen' }
       ],
-      // 数据 地图
-      dataMap,
-      // 数据 top10 l1
-      dataTop10,
-      // 全国存栏分布 l2
-      cunLanFenBu,
-      // 全国品种占比 l3
-      pinZhongZhanBi,
       // 右侧有所卡片共享的地区名称
       rName: '',
       // 每个地区的详细数据 r1
       r1Info: {
         cd: 0,
         hl: 0,
-        tt: 0,
-        ym: 0
+        tt: 0
       },
       r1Value: 0
     }
   },
   computed: {
+    pinZhongZhanBi () {
+      // 全国品种占比
+      let builder = (name) => {
+        let temp = 0
+        this.pinZhongChina.forEach(e => { temp += Number(e[name]) })
+        return temp
+      }
+      return [
+        {name: '红壳蛋鸡', value: builder('hong')},
+        {name: '粉壳蛋鸡', value: builder('fen')},
+        {name: '白壳蛋鸡', value: builder('bai')}
+      ]
+    },
+    cunLanFenBu () {
+      // 全国存栏区间分布
+      let builder = (name) => {
+        let temp = 0
+        this.cunLan.forEach(e => { temp += Number(e[name]) })
+        return temp
+      }
+      return [
+        {name: '＜1000', value: builder('1000')},
+        {name: '1000-3000', value: builder('1000-3000')},
+        {name: '3000-5000', value: builder('3000-5000')},
+        {name: '5000-10000', value: builder('5000-10000')},
+        {name: '>10000', value: builder('10000')}
+      ]
+    },
+    dataTop10 () {
+      return this.pinZhongChina.sort((a, b) => Number(a.all) - Number(b.all)).slice(-10).map(e => ({name: e.name, value: e.all}))
+    },
     pieceMapFilted () {
       // 右上角小地图的数据
       let data = this.pinZhongPiece.filter(e => e.name === this.rName)
@@ -200,9 +217,9 @@ export default {
       // 产蛋 日耗料 淘汰鸡 疫苗 传递给中间下部分 根据地图右侧的控制器切换
       let data = this.cunLanInfoChina.filter(e => e.name === this.dataNavActive)[0]
       return [
-        { label: '产蛋量', value: data.cd },
-        { label: '日耗料', value: data.hl },
-        { label: '淘汰鸡', value: data.tt }
+        { label: '年产蛋', value: data.cd },
+        { label: '年耗料', value: data.hl },
+        { label: '年淘汰鸡', value: data.tt }
       ]
     },
     // 地图的标题
@@ -230,11 +247,11 @@ export default {
       let data = cunLan.filter(e => e.name === this.rName)
       if (data.length > 0) {
         return [
-          {name: '＜1000', value: data[0]['＜1000']},
+          {name: '＜1000', value: data[0]['1000']},
           {name: '1000-3000', value: data[0]['1000-3000']},
           {name: '3000-5000', value: data[0]['3000-5000']},
           {name: '5000-10000', value: data[0]['5000-10000']},
-          {name: '>10000', value: data[0]['>10000']}
+          {name: '>10000', value: data[0]['10000']}
         ]
       } else {
         return []
@@ -278,8 +295,7 @@ export default {
       this.r1Info = {
         cd: r1Data[0].cd,
         hl: r1Data[0].hl,
-        tt: r1Data[0].tt,
-        ym: r1Data[0].ym
+        tt: r1Data[0].tt
       }
     },
     mapClick (params) {
