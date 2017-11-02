@@ -206,7 +206,7 @@ export default {
     // 地图的标题
     mapTitle () {
       let data = this.counter('keHuChina', 'all')
-      return '养殖户' + data + '万人'
+      return '全国养殖户' + data + '万人'
     },
     r2Data () {
       // r2数据 养殖户年龄分布
@@ -251,7 +251,6 @@ export default {
     if (this.$route.params.autoPlay) {
       this.autoPlay = true
     }
-    console.log(this.mapInfo)
   },
   methods: {
     counter (arrName, keyName) {
@@ -276,7 +275,6 @@ export default {
         fen: _fen,
         bai: _bai
       }
-      console.log(res)
       this.r1Info = res
     },
     mapClick (params) {
@@ -292,10 +290,9 @@ export default {
         this.rName = ''
         // r1
         this.r1Info = {
-          cd: 0,
-          hl: 0,
-          tt: 0,
-          ym: 0
+          hong: 0,
+          bai: 0,
+          fen: 0
         }
         this.r1Value = 0
       }

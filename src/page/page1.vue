@@ -226,7 +226,7 @@ export default {
     // 地图的标题
     mapTitle () {
       let data = this.cunLanInfoChina.filter(e => e.name === this.dataNavActive)[0]
-      return '存栏' + data.cl + '万只'
+      return '全国存栏' + data.cl + '万只'
     },
     rType () {
       // 右侧有所卡片共享的数据分类 比如'红壳蛋鸡'
