@@ -77,21 +77,21 @@
     <template slot="r1">
       <zhishu
         name="河北指数"
-        :data="nationIndexData"
-        :activeFlag.sync="nationEggIndex"
+        :data="areaIndexData"
+        :activeFlag.sync="areaEggIndex"
         :size="offsetSize.l1">
       </zhishu>
     </template>
     <template slot="r2">
       <div>
         <div class="time-wrapper">
-          <div :class="[nationEggTime === 0 ? 'time-active' : 'time']" @click="nationEggTime = 0">日</div>
-          <div :class="[nationEggTime === 1 ? 'time-active' : 'time']" @click="nationEggTime = 1">月</div>
-          <div :class="[nationEggTime === 2 ? 'time-active' : 'time']" @click="nationEggTime = 2">年</div>
+          <div :class="[areaEggTime === 0 ? 'time-active' : 'time']" @click="areaEggTime = 0">日</div>
+          <div :class="[areaEggTime === 1 ? 'time-active' : 'time']" @click="areaEggTime = 1">月</div>
+          <div :class="[areaEggTime === 2 ? 'time-active' : 'time']" @click="areaEggTime = 2">年</div>
         </div>
         <broken-line
           name="河北蛋价指数趋势"
-          :data="nationIndexTendencyData"
+          :data="areaIndexTendencyData"
           :ready="layoutReady"
           :size="offsetSize.l2"
           :color-title="colorTitle">
@@ -100,24 +100,24 @@
     </template>
     <template slot="r3">
       <div>
-        <div :class="[nationMarketIndex === 0 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 0">红壳鸡蛋</div>
-        <div :class="[nationMarketIndex === 1 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 1">粉壳鸡蛋</div>
-        <div :class="[nationMarketIndex === 2 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 2">白壳鸡蛋</div>
-        <div :class="[nationMarketIndex === 3 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 3">玉米</div>
-        <div :class="[nationMarketIndex === 4 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 4">豆粕</div>
-        <div :class="[nationMarketIndex === 5 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 5">淘汰鸡</div>
+        <div :class="[areaMarketIndex === 0 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 0">红壳鸡蛋</div>
+        <div :class="[areaMarketIndex === 1 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 1">粉壳鸡蛋</div>
+        <div :class="[areaMarketIndex === 2 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 2">白壳鸡蛋</div>
+        <div :class="[areaMarketIndex === 3 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 3">玉米</div>
+        <div :class="[areaMarketIndex === 4 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 4">豆粕</div>
+        <div :class="[areaMarketIndex === 5 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 5">淘汰鸡</div>
       </div>
       <broken-line
         name="河北行情指数趋势"
-        :data="nationMarketIndexTendencyData"
+        :data="areaMarketIndexTendencyData"
         :ready="layoutReady"
         :size="offsetSize.l2"
         :color-title="colorTitle">
       </broken-line>
       <div>
-        <div :class="[nationMarketTime === 0 ? 'market-time-btn-active' : 'market-time-btn']" @click="nationMarketTime = 0">日</div>
-        <div :class="[nationMarketTime === 1 ? 'market-time-btn-active' : 'market-time-btn']" @click="nationMarketTime = 1">周</div>
-        <div :class="[nationMarketTime === 2 ? 'market-time-btn-active' : 'market-time-btn']" @click="nationMarketTime = 2">月</div>
+        <div :class="[areaMarketTime === 0 ? 'market-time-btn-active' : 'market-time-btn']" @click="areaMarketTime = 0">日</div>
+        <div :class="[areaMarketTime === 1 ? 'market-time-btn-active' : 'market-time-btn']" @click="areaMarketTime = 1">周</div>
+        <div :class="[areaMarketTime === 2 ? 'market-time-btn-active' : 'market-time-btn']" @click="areaMarketTime = 2">月</div>
       </div>
     </template>
   </layout>
@@ -140,6 +140,7 @@ import dataTop10 from '@/data/old/page1/全国存栏量.js'
 import cunLanFenBu from '@/data/old/page1/全国存栏区间分布.js'
 import pinZhongZhanBi from '@/data/old/page1/全国品种占比.js'
 import quanGuoDanZhiShu from '@/data/new/page3/全国蛋指数.js'
+import heBeiDanZhiShu from '@/data/new/page3/河北蛋指数.js'
 
 // 下面是新的数据
 import pinZhong from '@/data/new/page1/全国品种.js'
@@ -160,13 +161,16 @@ export default {
   data () {
     return {
       nationEggIndex: 0,
-      areaEggIndex: 0,
       nationMarketIndex: 0,
-      areaMarketIndex: 0,
       nationEggTime: 0,
       nationMarketTime: 0,
+      areaEggIndex: 0,
+      areaMarketIndex: 0,
+      areaEggTime: 0,
+      areaMarketTime: 0,
       // 蛋指数
       quanGuoDanZhiShu,
+      heBeiDanZhiShu,
       // 新版数据
       pinZhong,
       cunLan,
@@ -249,6 +253,25 @@ export default {
     // 全国行情指数趋势
     nationMarketIndexTendencyData () {
       return this.quanGuoDanZhiShu[this.nationEggIndex].detailData[this.nationMarketTime]
+    },
+    // 地区指数
+    areaIndexData () {
+      return this.heBeiDanZhiShu.map(e => {
+        return {
+          title: e.title,
+          index: e.index,
+          indexFloat: e.indexFloat,
+          floatFlag: e.floatFlag
+        }
+      })
+    },
+    // 地区指数趋势
+    areaIndexTendencyData () {
+      return this.heBeiDanZhiShu[this.areaEggIndex].detailData[this.areaEggTime]
+    },
+    // 地区行情指数趋势
+    areaMarketIndexTendencyData () {
+      return this.heBeiDanZhiShu[this.areaEggIndex].detailData[this.areaMarketTime]
     },
     dataMapFilted () {
       // 地图数据 这个计算属性会传递给地图
