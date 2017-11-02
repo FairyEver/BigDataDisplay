@@ -5,9 +5,9 @@
       <div class="btnGroup">
         <div class="btn" @click="togglePlay">{{autoPlay ? '停止播放' : '自动播放'}}</div>
         <div class="btn" @click="$root.toggleFullScreen">{{$root.isFullScreen ? '退出全屏' : '进入全屏'}}</div>
+        <div class="btn">当前分辨率: {{screenWidth}} x {{screenHeight}}</div>
       </div>
       <slot name="title">标题插槽</slot>
-      {{screenWidth}} x {{screenHeight}}
     </div>
     <!-- 主体区域 -->
     <div class="row content">
