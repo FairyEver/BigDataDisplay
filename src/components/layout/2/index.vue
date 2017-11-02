@@ -7,6 +7,7 @@
         <div class="btn" @click="$root.toggleFullScreen">{{$root.isFullScreen ? '退出全屏' : '进入全屏'}}</div>
       </div>
       <slot name="title">标题插槽</slot>
+      {{screenWidth}} x {{screenHeight}}
     </div>
     <!-- 主体区域 -->
     <div class="row content">
@@ -136,6 +137,8 @@ export default {
     this.updateSize()
     const _this = this
     let timer = false
+    this.screenWidth = document.body.clientWidth
+    this.screenHeight = document.body.clientHeight
     window.onresize = () => {
       if (timer) {
         return false
