@@ -7,23 +7,27 @@
     :data-nav-active.sync="dataNavActive"
     :offset-size.sync="offsetSize"
     :layout-ready.sync="layoutReady"
-    :h-item-l1="280"
-    :h-item-r1="280">
+    :h-item-l1="160"
+    :h-item-r1="160">
 
     <template slot="title">行情大数据展示</template>
 
     <template slot="l1">
-      <bar
-        name="全国存栏量"
+      <!-- <bar
+        name="全国指数"
         :ready="layoutReady"
         :size="offsetSize.l1"
         :data="dataTop10"
         :color-title="colorTitle">
-      </bar>
+      </bar> -->
+      <zhishu
+        name="全国指数"
+        :size="offsetSize.l1">
+      </zhishu>
     </template>
     <template slot="l2">
       <pie
-        name="全国存栏区间分布"
+        name="全国蛋价指数趋势"
         :ready="layoutReady"
         :size="offsetSize.l2"
         :data="cunLanFenBu"
@@ -32,7 +36,7 @@
     </template>
     <template slot="l3">
       <pie
-        name="全国品种占比"
+        name="全国盈利指数趋势"
         :ready="layoutReady"
         :size="offsetSize.l3"
         :data="pinZhongZhanBi"
@@ -51,12 +55,12 @@
         @playRound="mapPlayRound">
       </map-x>
     </template>
-    <template slot="c2">
+    <!-- <template slot="c2">
       <number-x :data="mapInfo"></number-x>
-    </template>
+    </template> -->
 
     <template slot="r1">
-      <cunlan-info
+      <!-- <cunlan-info
         :name="rName + rType + '存栏量'"
         :ready="layoutReady"
         :size="offsetSize.r1"
@@ -64,7 +68,11 @@
         :info="r1Info"
         :province="rName"
         :color-title="colorTitle">
-      </cunlan-info>
+      </cunlan-info> -->
+      <zhishu
+      name="XX指数"
+        :size="offsetSize.l1">
+      </zhishu>
     </template>
     <template slot="r2">
       <pie
@@ -84,14 +92,14 @@
         :color-title="colorTitle">
       </pie>
     </template>
-
   </layout>
 </template>
 
 <script>
 // [组件] 主布局
 import layout from '@/components/layout/2/index.vue'
-import mapX from '@/components/charts/map/china/simple.vue'
+import zhishu from '@/components/component/zhishu/zhishu.vue'
+import mapX from '@/components/charts/map/china/simple3.vue'
 import numberX from '@/components/number/index.vue'
 import bar from '@/components/charts/bar/row.vue'
 import pie from '@/components/charts/pie/type1.vue'
@@ -111,6 +119,7 @@ import cunLanInfoChina from '@/data/new/page1/每种存栏的四项数据_全国
 export default {
   components: {
     layout,
+    zhishu,
     mapX,
     numberX,
     bar,
@@ -131,10 +140,11 @@ export default {
       // 颜色设置
       colorTitle: '#55EDDC',
       // 导航栏
-      navActive: 'page1',
+      navActive: 'page3',
       nav: [
         { label: '蛋鸡存栏', value: 'page1' },
-        { label: '养殖户分布', value: 'page2' }
+        { label: '养殖户分布', value: 'page2' },
+        { label: '行情数据', value: 'page3' }
       ],
       // 数据导航栏
       dataNavActive: 'all',
