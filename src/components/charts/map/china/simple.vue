@@ -67,7 +67,8 @@ export default {
           itemWidth: 8,
           itemHeight: 50,
           // color: ['#2DB1FF', '#002330'],
-          color: ['#00F4FF', '#0C1019'],
+          // color: ['#00F4FF', '#0C1019'],
+          color: ['#1EB2BD', '#134C55'],
           text: ['高', '低'],
           textStyle: {
             color: '#2DB1FF'
@@ -98,8 +99,8 @@ export default {
                 label: {
                   show: false
                 },
-                borderWidth: 1,
-                borderColor: '#1E6591'
+                borderWidth: 2,
+                borderColor: '#11CDD9'
               },
               emphasis: {
                 label: {
@@ -111,9 +112,9 @@ export default {
                   padding: [4, 6],
                   borderRadius: 2
                 },
-                areaColor: '#78F7FF',
-                borderWidth: 1,
-                borderColor: '#0C1019',
+                areaColor: '#FFCF2D',
+                borderWidth: 2,
+                borderColor: '#FF8D23',
                 shadowColor: 'rgba(0, 0, 0, 0.4)',
                 shadowBlur: 20,
                 shadowOffsetY: 4
