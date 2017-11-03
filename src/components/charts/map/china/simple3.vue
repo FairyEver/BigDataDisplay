@@ -110,7 +110,7 @@ export default {
               show: false
             }
           },
-          roam: true,
+          roam: false,
           itemStyle: {
             normal: {
               areaColor: '#134C55',
@@ -172,8 +172,8 @@ export default {
             //   }
             // },
             name: '行情数据',
-            // type: 'scatter',
-            type: 'effectScatter',
+            type: 'scatter',
+            // type: 'effectScatter',
             coordinateSystem: 'geo',
             // symbolSize: function (val) {
             //   return val[2] / 4
