@@ -138,7 +138,8 @@ export default {
       navActive: 'page1',
       nav: [
         { label: '蛋鸡存栏', value: 'page1' },
-        { label: '养殖户分布', value: 'page2' }
+        { label: '养殖户分布', value: 'page2' },
+        { label: '行情数据', value: 'page3' }
       ],
       // 数据导航栏
       dataNavActive: 'all',
@@ -226,7 +227,7 @@ export default {
     // 地图的标题
     mapTitle () {
       let data = this.cunLanInfoChina.filter(e => e.name === this.dataNavActive)[0]
-      return '全国存栏' + data.cl + '万只'
+      return '全国存栏 ' + this.$root.qian(data.cl) + ' 万只'
     },
     rType () {
       // 右侧有所卡片共享的数据分类 比如'红壳蛋鸡'

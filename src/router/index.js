@@ -9,7 +9,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/page1',
+      path: '/',
       name: 'page1',
       component: page1
     },

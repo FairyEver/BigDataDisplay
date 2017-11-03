@@ -21,6 +21,16 @@ new Vue({
     }
   },
   methods: {
+    qian (n) {
+      // 整型转字符串
+      var number = Number(n)
+      var str = number.toString()
+      // 正则匹配
+      var newstr = str.replace(/\d{1,3}(?=(\d{3})+$)/g, function (s) {
+        return s + ','
+      })
+      return newstr
+    },
     toggleFullScreen () {
       if (this.isFullScreen) {
         this.exitFullScreen()

@@ -51,17 +51,6 @@
         </div>
         <div class="type2item">
           <pie
-            :data="info.bai"
-            :size="sizePie"
-            :color-dark="'#806400'"
-            :color-light="'#FFD848'"
-            :font-size="10"
-            :radius="['70%', '80%']">
-          </pie>
-          <div class="type2title" :style="styleColor">白壳占比</div>
-        </div>
-        <div class="type2item">
-          <pie
             :data="info.fen"
             :size="sizePie"
             :color-dark="'#005F3F'"
@@ -70,6 +59,17 @@
             :radius="['70%', '80%']">
           </pie>
           <div class="type2title" :style="styleColor">粉壳占比</div>
+        </div>
+        <div class="type2item">
+          <pie
+            :data="info.bai"
+            :size="sizePie"
+            :color-dark="'#806400'"
+            :color-light="'#FFD848'"
+            :font-size="10"
+            :radius="['70%', '80%']">
+          </pie>
+          <div class="type2title" :style="styleColor">白壳占比</div>
         </div>
         <!-- 养殖户信息 结束 -->
       </div>

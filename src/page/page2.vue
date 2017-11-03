@@ -68,17 +68,17 @@
         :map="pieceMapFilted"
         :province="rName"
         :color-title="colorTitle"
-        :dw="'万人'">
+        :dw="'户'">
       </cunlan-info>
     </template>
     <template slot="r2">
-      <pie
+      <bar-col
         :name="rName + '养殖户年龄分布'"
         :ready="layoutReady"
         :size="offsetSize.r2"
         :data="r2Data"
         :color-title="colorTitle">
-      </pie>
+      </bar-col>
     </template>
     <template slot="r3">
       <pie
@@ -137,15 +137,16 @@ export default {
       navActive: 'page2',
       nav: [
         { label: '蛋鸡存栏', value: 'page1' },
-        { label: '养殖户分布', value: 'page2' }
+        { label: '养殖户分布', value: 'page2' },
+        { label: '行情数据', value: 'page3' }
       ],
       // 右侧有所卡片共享的地区名称
       rName: '',
       // 每个地区的详细数据 r1
       r1Info: {
         hong: 0,
-        bai: 0,
-        fen: 0
+        fen: 0,
+        bai: 0
       },
       r1Value: 0
     }
@@ -199,14 +200,14 @@ export default {
       let bai = Math.round(this.counter('keHuChina', 'bai') / all * 100)
       return [
         { label: '红壳蛋鸡养殖户', value: hong },
-        { label: '白壳蛋鸡养殖户', value: bai },
-        { label: '粉壳蛋鸡养殖户', value: 100 - hong - bai }
+        { label: '粉壳蛋鸡养殖户', value: 100 - hong - bai },
+        { label: '白壳蛋鸡养殖户', value: bai }
       ]
     },
     // 地图的标题
     mapTitle () {
       let data = this.counter('keHuChina', 'all')
-      return '全国养殖户' + data + '万人'
+      return '全国养殖户 ' + this.$root.qian(data) + ' 户'
     },
     r2Data () {
       // r2数据 养殖户年龄分布
