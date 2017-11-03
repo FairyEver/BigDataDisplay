@@ -21,7 +21,7 @@ export default {
     defaultActiveName: { default: '河北' },
     // 自动播放相关
     autoPlay: { default: false },
-    autoPlayTimeSpace: { default: 1000 },
+    autoPlayTimeSpace: { default: 3000 },
     // 可以使用的地区 除了这几个地区 其它的都不能点 不能激活
     ableSpace: {
       default: () => {
@@ -45,90 +45,288 @@ export default {
       // 图表设置
       chart: null,
       option: {
+        // title: {
+        //   text: '全国数据',
+        //   x: 'center',
+        //   top: 60,
+        //   textStyle: {
+        //     color: '#FEE032',
+        //     fontSize: 24
+        //   }
+        // },
+        // tooltip: {
+        //   show: false
+        //   // trigger: 'item',
+        //   // formatter: '{c0}'
+        // },
+        // legend: {
+        //   orient: 'vertical',
+        //   y: 'bottom',
+        //   x: 'right',
+        //   data: ['蛋价区域'],
+        //   textStyle: {
+        //     color: '#2DB1FF'
+        //   }
+        // },
+        // visualMap: {
+        //   type: 'continuous',
+        //   show: false,
+        //   min: 0,
+        //   max: 10000,
+        //   itemWidth: 8,
+        //   itemHeight: 50,
+        //   color: ['#1EB2BD', '#134C55'],
+        //   text: [],
+        //   textStyle: {
+        //     color: '#2DB1FF'
+        //   }
+        // },
+        // toolbox: {
+        //   show: false
+        // },
+        // roamController: {
+        //   show: true,
+        //   x: 'right',
+        //   mapTypeControl: {
+        //     'china': true
+        //   }
+        // },
         title: {
-          text: '全国数据',
+          text: '',
           x: 'center',
-          top: 60,
           textStyle: {
             color: '#FEE032',
             fontSize: 24
           }
         },
         tooltip: {
-          show: false
-          // trigger: 'item',
-          // formatter: '{c0}'
-        },
-        legend: {
-          orient: 'vertical',
-          y: 'bottom',
-          x: 'right',
-          data: ['蛋价区域'],
-          textStyle: {
-            color: '#fff'
-          }
-        },
-        visualMap: {
-          type: 'continuous',
           show: false,
-          min: 0,
-          max: 10000,
-          itemWidth: 8,
-          itemHeight: 50,
-          color: ['#2DB1FF', '#002330'],
-          text: [],
-          textStyle: {
-            color: '#2DB1FF'
-          }
+          trigger: 'item'
         },
-        toolbox: {
-          show: false
-        },
-        roamController: {
-          show: true,
-          x: 'right',
-          mapTypeControl: {
-            'china': true
+        geo: {
+          map: 'china',
+          label: {
+            emphasis: {
+              show: false
+            }
+          },
+          roam: true,
+          itemStyle: {
+            normal: {
+              areaColor: '#134C55',
+              borderColor: '#11CDD9',
+              borderWidth: 2
+            },
+            emphasis: {
+              areaColor: '#FFCF2D'
+            }
           }
         },
         series: [
           {
-            type: 'map',
-            mapType: 'china',
-            roam: false,
-            // top: 0,
-            // bottom: 0,
-            left: 50,
-            right: 50,
-            itemStyle: {
+            // name: 'map',
+            // type: 'map',
+            // symbolSize: function (val) {
+            //   return val[2] / 10
+            // },
+            // mapType: 'china',
+            // roam: false,
+            // label: {
+            //   normal: {
+            //     formatter: '{b}',
+            //     position: 'right',
+            //     show: false
+            //   },
+            //   emphasis: {
+            //     show: true
+            //   }
+            // },
+            // left: 50,
+            // right: 50,
+            // itemStyle: {
+            //   normal: {
+            //     color: '#f4e925',
+            //     areaColor: 'rgba(0,0,0,0)',
+            //     label: {
+            //       show: false
+            //     },
+            //     borderWidth: 2,
+            //     borderColor: '#11CDD9'
+            //   },
+            //   emphasis: {
+            //     label: {
+            //       show: true,
+            //       position: ['50%', '50%'],
+            //       fontSize: 16,
+            //       color: '#52D7E9',
+            //       backgroundColor: 'rgba(0,0,0,.7)',
+            //       padding: [4, 6],
+            //       borderRadius: 2
+            //     },
+            //     areaColor: '#FFCF2D',
+            //     borderWidth: 2,
+            //     borderColor: '#FF8D23',
+            //     shadowColor: 'rgba(0, 0, 0, 0.4)',
+            //     shadowBlur: 20,
+            //     shadowOffsetY: 4
+            //   }
+            // },
+            name: '行情数据',
+            // type: 'scatter',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            // symbolSize: function (val) {
+            //   return val[2] / 4
+            // },
+            symbolSize: 7,
+            rippleEffect: {
+              brushType: 'stroke'
+            },
+            label: {
               normal: {
-                color: '#f4e925',
-                areaColor: 'rgba(0,0,0,0)',
-                label: {
-                  show: false
-                },
-                borderWidth: 1,
-                borderColor: '#1E6591'
+                formatter: '{b}',
+                position: 'right',
+                show: false
               },
               emphasis: {
-                label: {
-                  show: true,
-                  position: ['50%', '50%'],
-                  fontSize: 16,
-                  color: '#52D7E9',
-                  backgroundColor: 'rgba(0,0,0,.7)',
-                  padding: [4, 6],
-                  borderRadius: 2
-                },
-                areaColor: '#78F7FF',
-                borderWidth: 1,
-                borderColor: '#0C1019',
-                shadowColor: 'rgba(0, 0, 0, 0.4)',
-                shadowBlur: 20,
-                shadowOffsetY: 4
+                show: true
               }
             },
-            data: []
+            itemStyle: {
+              normal: {
+                color: '#f4e925'
+              }
+            },
+            data: [
+              {
+                name: '海门',
+                value: [121.15, 31.89, 9]
+              },
+              {
+                name: '鄂尔多斯',
+                value: [109.781327, 39.608266, 12]
+              },
+              {
+                name: '招远',
+                value: [120.38, 37.35, 12]
+              },
+              {
+                name: '舟山',
+                value: [122.207216, 29.985295, 12]
+              },
+              {
+                name: '齐齐哈尔',
+                value: [123.97, 47.33, 14]
+              },
+              {
+                name: '盐城',
+                value: [120.13, 33.38, 15]
+              },
+              {
+                name: '赤峰',
+                value: [118.87, 42.28, 16]
+              },
+              {
+                name: '青岛',
+                value: [120.33, 36.07, 18]
+              },
+              {
+                name: '乳山',
+                value: [121.52, 36.89, 18]
+              },
+              {
+                name: '金昌',
+                value: [102.188043, 38.520089, 19]
+              },
+              {
+                name: '泉州',
+                value: [118.58, 24.93, 21]
+              },
+              {
+                name: '莱西',
+                value: [120.53, 36.86, 21]
+              },
+              {
+                name: '日照',
+                value: [119.46, 35.42, 21]
+              },
+              {
+                name: '胶南',
+                value: [119.97, 35.88, 22]
+              },
+              {
+                name: '南通',
+                value: [121.05, 32.08, 23]
+              },
+              {
+                name: '拉萨',
+                value: [91.11, 29.97, 24]
+              },
+              {
+                name: '云浮',
+                value: [112.02, 22.93, 24]
+              },
+              {
+                name: '梅州',
+                value: [116.1, 24.55, 25]
+              },
+              {
+                name: '文登',
+                value: [122.05, 37.2, 25]
+              },
+              {
+                name: '上海',
+                value: [121.48, 31.22, 25]
+              },
+              {
+                name: '攀枝花',
+                value: [101.718637, 26.582347, 25]
+              },
+              {
+                name: '威海',
+                value: [122.1, 37.5, 25]
+              },
+              {
+                name: '承德',
+                value: [117.93, 40.97, 25]
+              },
+              {
+                name: '厦门',
+                value: [118.1, 24.46, 26]
+              },
+              {
+                name: '汕尾',
+                value: [115.375279, 22.786211, 26]
+              },
+              {
+                name: '潮州',
+                value: [116.63, 23.68, 26]
+              },
+              {
+                name: '丹东',
+                value: [124.37, 40.13, 27]
+              },
+              {
+                name: '太仓',
+                value: [121.1, 31.45, 27]
+              },
+              {
+                name: '曲靖',
+                value: [103.79, 25.51, 27]
+              },
+              {
+                name: '烟台',
+                value: [121.39, 37.52, 28]
+              },
+              {
+                name: '福州',
+                value: [119.3, 26.08, 29]
+              },
+              {
+                name: '瓦房店',
+                value: [121.979603, 39.627114, 30]
+              }
+            ]
           }
         ]
       }
@@ -269,7 +467,7 @@ export default {
           allCount = allCount + Number(e.value)
         })
         this.option.title.text = ''
-        this.option.series[0].data = this.data
+        // this.option.series[0].data = this.data
         // 重新设置图表
         this.chart.setOption(this.option)
         let _this = this
@@ -297,7 +495,7 @@ export default {
           allCount = allCount + Number(e.value)
         })
         this.option.title.text = '全国存栏 约' + Math.round(allCount) + '万只'
-        this.option.series[0].data = this.data
+        // this.option.series[0].data = this.data
         // 重新设置图表
         this.chart.setOption(this.option)
         this.activeMap(this.selectedMap)

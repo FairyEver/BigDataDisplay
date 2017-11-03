@@ -48,9 +48,9 @@
           </div>
         </div>
         <!-- 额外信息区域 -->
-        <div ref="c2" class="item hov" :style="infoStyle">
+        <!-- <div ref="c2" class="item hov" :style="infoStyle">
           <slot name="c2"></slot>
-        </div>
+        </div> -->
       </div>
       <!-- 右侧 -->
       <div class="col right" :style="colStyle(2)">
@@ -313,7 +313,7 @@ export default {
           .index-point{
             height: 40px;
             position: absolute;
-            top: 50px;
+            top: 100px;
             left: 0px;
             width: 100%;
             // 让内部元素垂直水平居中
