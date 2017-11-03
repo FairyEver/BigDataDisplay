@@ -68,11 +68,11 @@
         @playRound="mapPlayRound">
       </map-x>
     </template>
-    <template slot="c2">
+    <!-- <template slot="c2">
       <div class="legend"><span class="legend-point1">●</span> 蛋价区域</div>
       <div class="legend"><span class="legend-point2">●</span> 成本区域</div>
       <div class="legend"><span class="legend-point3">●</span> 盈利区域</div>
-    </template>
+    </template> -->
 
     <template slot="r1">
       <zhishu
@@ -426,19 +426,19 @@ export default {
   font-size: 16px;
   display: inline-block;
 }
-.legend {
-  background: rgba(13, 17, 26, 0.5);
-  padding: 5px 10px;
-  margin: 0 3px;
-  .legend-point1 {
-    color: #f4e925;
-  }
-  .legend-point2 {
-    color: #7bd93d;
-  }
-  .legend-point3 {
-    color: #dc5ac7;
-  }
-}
+// .legend {
+//   background: rgba(13, 17, 26, 0.5);
+//   padding: 5px 10px;
+//   margin: 0 3px;
+//   .legend-point1 {
+//     color: #f4e925;
+//   }
+//   .legend-point2 {
+//     color: #7bd93d;
+//   }
+//   .legend-point3 {
+//     color: #dc5ac7;
+//   }
+// }
 </style>
 

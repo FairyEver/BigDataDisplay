@@ -70,13 +70,13 @@ export default {
         },
         visualMap: {
           type: 'continuous',
-          show: true,
+          show: false,
           min: 0,
           max: 10000,
           itemWidth: 8,
           itemHeight: 50,
           color: ['#2DB1FF', '#002330'],
-          text: ['高', '低'],
+          text: [],
           textStyle: {
             color: '#2DB1FF'
           }
