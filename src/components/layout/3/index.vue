@@ -33,8 +33,15 @@
             </div>
           </div>
           <div class="index-point">
-            <div class="index-point-item">采集点数量 <span class="index-point-item-span">4556</span></div>
-            <div class="index-point-item">时间 <span class="index-point-item-span">2017-10-23</span></div>
+            <div class="index-point-item index-point-item-pd">采集点数量 <span class="index-point-item-span">4556</span></div>
+            <div class="index-point-item">
+              <div class="index-point-item-pd" @click="chooseDate">时间 
+                <span class="index-point-item-span">{{date.value}}</span>
+              </div>
+              <div class="choose-time-wrapper" v-if="chooseTimeFlag === true">
+                <div class="choose-time" v-for="item in indexDate" :key="item.id" @click="changeDate(item)">{{item.value}}</div>
+              </div>
+            </div>
           </div>
           <div v-if="dataNav.length > 0" class="dataNav">
             <div
@@ -47,10 +54,6 @@
             </div>
           </div>
         </div>
-        <!-- 额外信息区域 -->
-        <!-- <div ref="c2" class="item hov" :style="infoStyle">
-          <slot name="c2"></slot>
-        </div> -->
       </div>
       <!-- 右侧 -->
       <div class="col right" :style="colStyle(2)">
@@ -63,8 +66,18 @@
 </template>
 
 <script>
+import indexDate from '@/data/new/page3/指数日期.js'
+
 export default {
   props: {
+    date: {
+      default: () => {
+        return {
+          id: 0,
+          value: '2017-10-20'
+        }
+      }
+    },
     // 计算后的每个区域尺寸
     offsetSize: { default: () => {} },
     layoutReady: { default: false },
@@ -104,6 +117,8 @@ export default {
   },
   data () {
     return {
+      indexDate,
+      chooseTimeFlag: false,
       screenWidth: document.body.clientWidth,
       screenHeight: document.body.clientHeight
     }
@@ -158,6 +173,13 @@ export default {
     }
   },
   methods: {
+    chooseDate () {
+      this.chooseTimeFlag = !this.chooseTimeFlag
+    },
+    changeDate (obj) {
+      this.$emit('update:date', obj)
+      this.chooseTimeFlag = false
+    },
     itemStyle (name) {
       // 返回左边和右边卡片的样式
       let heightStyle = {}
@@ -320,12 +342,29 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            .index-point-item-pd{
+              padding: 3px 5px;
+            }
             .index-point-item{
+              position: relative;
               font-size: 14px;
-              padding: 4px 10px;
               margin: 0 5px;
               color: #FFF;
               background-color: #1a1e29;
+              .choose-time-wrapper{
+                position: absolute;
+                top: 100%;
+                left: 0%;
+                width: 100%;
+                padding: 3px 0;
+                background-color: #1a1e29;
+                .choose-time{
+                  color: #f4e925;
+                  width: 100%;
+                  text-align: center;
+                  padding: 3px 0;
+                }
+              }
               .index-point-item-span {
                 color: #f4e925;
               }

@@ -1,5 +1,6 @@
 <template>
   <layout
+    :date.sync='date'
     :auto-play.sync="autoPlay"
     :nav="nav"
     :nav-active.sync="navActive"
@@ -155,6 +156,10 @@ export default {
   },
   data () {
     return {
+      date: {
+        id: 0,
+        value: '2017-10-20'
+      },
       nationEggIndex: 0,
       nationMarketIndex: 0,
       nationEggTime: 0,
