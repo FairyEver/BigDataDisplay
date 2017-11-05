@@ -29,6 +29,8 @@ export default {
   props: {
     name: { default: '未命名图表' },
     data: { default: () => [] },
+    changeFlagDate: { default: 0 },
+    changeFlagArea: { default: 0 },
     activeFlag: { default: 0 },
     size: {
       default: () => {
@@ -63,6 +65,18 @@ export default {
   mounted () {
     this.init()
   },
+  watch: {
+    changeFlagDate (val, oldVal) {
+      if (val !== oldVal) {
+        this.init()
+      }
+    },
+    changeFlagArea (val, oldVal) {
+      if (val !== oldVal) {
+        this.init()
+      }
+    }
+  },
   methods: {
     chooseIndex (flag) {
       this.$emit('update:activeFlag', flag)
@@ -74,9 +88,9 @@ export default {
         separator: ',',
         decimal: '.'
       }
-      this.counterObj1 = new Counter(this.$refs.eggCount, 0, this.data[0].index, 2, 2, options)
-      this.counterObj2 = new Counter(this.$refs.costCount, 0, this.data[1].index, 2, 2, options)
-      this.counterObj3 = new Counter(this.$refs.profitCount, 0, this.data[2].index, 2, 2, options)
+      this.counterObj1 = new Counter(this.$refs.eggCount, 0, this.data[0].index, 0, 1, options)
+      this.counterObj2 = new Counter(this.$refs.costCount, 0, this.data[1].index, 0, 1, options)
+      this.counterObj3 = new Counter(this.$refs.profitCount, 0, this.data[2].index, 0, 1, options)
       this.counterObj1.start()
       this.counterObj2.start()
       this.counterObj3.start()

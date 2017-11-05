@@ -15,6 +15,7 @@
       <zhishu
         name="全国指数"
         :data="nationIndexData"
+        :changeFlagDate="date.id"
         :activeFlag.sync="nationEggIndex"
         :size="offsetSize.l1">
       </zhishu>
@@ -41,7 +42,7 @@
         <div :class="[nationMarketIndex === 1 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 1">粉壳鸡蛋</div>
         <div :class="[nationMarketIndex === 2 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 2">白壳鸡蛋</div>
         <div :class="[nationMarketIndex === 3 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 3">玉米</div>
-        <div :class="[nationMarketIndex === 4 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 4">豆粕</div>
+        <div :class="[nationMarketIndex === 4 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 4">豆粕43</div>
         <div :class="[nationMarketIndex === 5 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 5">淘汰鸡</div>
       </div>
       <broken-line
@@ -74,6 +75,8 @@
       <zhishu
         name="河北指数"
         :data="areaIndexData"
+        :changeFlagDate="date.id"
+        :changeFlagArea="nowProvinceIndex"
         :activeFlag.sync="areaEggIndex"
         :size="offsetSize.l1">
       </zhishu>
@@ -100,7 +103,7 @@
         <div :class="[areaMarketIndex === 1 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 1">粉壳鸡蛋</div>
         <div :class="[areaMarketIndex === 2 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 2">白壳鸡蛋</div>
         <div :class="[areaMarketIndex === 3 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 3">玉米</div>
-        <div :class="[areaMarketIndex === 4 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 4">豆粕</div>
+        <div :class="[areaMarketIndex === 4 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 4">豆粕43</div>
         <div :class="[areaMarketIndex === 5 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 5">淘汰鸡</div>
       </div>
       <broken-line
@@ -136,7 +139,11 @@ import dataTop10 from '@/data/old/page1/全国存栏量.js'
 import cunLanFenBu from '@/data/old/page1/全国存栏区间分布.js'
 import pinZhongZhanBi from '@/data/old/page1/全国品种占比.js'
 import quanGuoDanZhiShu from '@/data/new/page3/全国蛋指数.js'
-import heBeiDanZhiShu from '@/data/new/page3/河北蛋指数.js'
+import quanGuoDanZhiShuQuShi from '@/data/new/page3/全国蛋指数趋势.js'
+import quanGuoHangQingZhiShuQuShi from '@/data/new/page3/全国行情指数趋势.js'
+import diQuDanZhiShu from '@/data/new/page3/地区蛋指数.js'
+import diQuDanZhiShuQuShi from '@/data/new/page3/地区蛋指数趋势.js'
+import diQuHangQingZhiShuQuShi from '@/data/new/page3/地区行情指数趋势.js'
 
 // 下面是新的数据
 import pinZhong from '@/data/new/page1/全国品种.js'
@@ -170,11 +177,16 @@ export default {
       areaMarketTime: 0,
       // 蛋指数
       quanGuoDanZhiShu,
-      heBeiDanZhiShu,
+      quanGuoDanZhiShuQuShi,
+      quanGuoHangQingZhiShuQuShi,
+      diQuDanZhiShu,
+      diQuDanZhiShuQuShi,
+      diQuHangQingZhiShuQuShi,
       // 新版数据
       pinZhong,
       cunLan,
       cunLanInfoChina,
+      nowProvince: '河北',
       // 自动播放
       autoPlay: false,
       // 布局尺寸
@@ -223,13 +235,25 @@ export default {
       ]
     }
   },
-  created () {
-    console.log(this.nationIndexData)
-  },
   computed: {
+    // 省切换
+    nowProvinceIndex () {
+      switch (this.nowProvince) {
+        case '河北':
+          return 0
+        case '辽宁':
+          return 1
+        case '江苏':
+          return 2
+        case '山东':
+          return 3
+        case '湖北':
+          return 4
+      }
+    },
     // 全国指数
     nationIndexData () {
-      return this.quanGuoDanZhiShu.map(e => {
+      return this.quanGuoDanZhiShu[this.date.id].map(e => {
         return {
           title: e.title,
           index: e.index,
@@ -240,15 +264,15 @@ export default {
     },
     // 全国指数趋势
     nationIndexTendencyData () {
-      return this.quanGuoDanZhiShu[this.nationEggIndex].detailData[this.nationEggTime]
+      return this.quanGuoDanZhiShuQuShi[this.nationEggIndex].detailData[this.nationEggTime]
     },
-    // 全国行情指数趋势
+    // // 全国行情指数趋势
     nationMarketIndexTendencyData () {
-      return this.quanGuoDanZhiShu[this.nationEggIndex].detailData[this.nationMarketTime]
+      return this.quanGuoHangQingZhiShuQuShi[this.nationMarketIndex].detailData[this.nationMarketTime]
     },
     // 地区指数
     areaIndexData () {
-      return this.heBeiDanZhiShu.map(e => {
+      return this.diQuDanZhiShu[this.nowProvinceIndex][this.date.id].map(e => {
         return {
           title: e.title,
           index: e.index,
@@ -259,11 +283,11 @@ export default {
     },
     // 地区指数趋势
     areaIndexTendencyData () {
-      return this.heBeiDanZhiShu[this.areaEggIndex].detailData[this.areaEggTime]
+      return this.diQuDanZhiShuQuShi[this.nowProvinceIndex][this.areaEggIndex].detailData[this.areaEggTime]
     },
     // 地区行情指数趋势
     areaMarketIndexTendencyData () {
-      return this.heBeiDanZhiShu[this.areaEggIndex].detailData[this.areaMarketTime]
+      return this.diQuHangQingZhiShuQuShi[this.nowProvinceIndex][this.areaMarketIndex].detailData[this.areaMarketTime]
     },
     dataMapFilted () {
       // 地图数据 这个计算属性会传递给地图
@@ -306,6 +330,9 @@ export default {
       this.$router.push({
         name: value
       })
+    },
+    nowProvinceIndex (value) {
+      console.log(value)
     }
   },
   mounted () {
@@ -316,33 +343,7 @@ export default {
   methods: {
     mapClick (params) {
       // 更新地图下面的数据
-      if (params.data) {
-        let data = params.data
-        // r
-        this.rName = data.name
-        // r1
-        this.r1Info = data.r1
-        this.r1Value = data.value
-        // r2
-        this.r2Data = data.r2
-        // r3
-        this.r3Data = data.r3
-      } else {
-        // r
-        this.rName = ''
-        // r1
-        this.r1Info = {
-          cd: 0,
-          hl: 0,
-          tt: 0,
-          ym: 0
-        }
-        this.r1Value = 0
-        // r2
-        this.r2Data = []
-        // r3
-        this.r3Data = []
-      }
+      this.nowProvince = params.data.name
     },
     mapPlayRound () {
       // 地图播放了一遍

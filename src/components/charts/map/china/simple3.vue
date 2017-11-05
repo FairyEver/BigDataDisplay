@@ -74,7 +74,21 @@ export default {
               borderWidth: 2
             },
             emphasis: {
-              areaColor: '#FFCF2D'
+              // label: {
+              //   show: true,
+              //   position: ['50%', '50%'],
+              //   fontSize: 16,
+              //   color: '#52D7E9',
+              //   backgroundColor: 'rgba(0,0,0,.7)',
+              //   padding: [4, 6],
+              //   borderRadius: 2
+              // },
+              areaColor: '#FFCF2D',
+              borderWidth: 2,
+              borderColor: '#FF8D23',
+              shadowColor: 'rgba(0, 0, 0, 0.4)',
+              shadowBlur: 20,
+              shadowOffsetY: 4
             }
           }
         },
@@ -107,6 +121,41 @@ export default {
               }
             },
             data: shuJuCaiJiDian
+          },
+          {
+            type: 'map',
+            mapType: 'china',
+            roam: false,
+            // top: 0,
+            // bottom: 0,
+            itemStyle: {
+              normal: {
+                areaColor: 'rgba(0,0,0,0)',
+                label: {
+                  show: false
+                },
+                borderWidth: 2,
+                borderColor: '#11CDD9'
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  position: ['50%', '50%'],
+                  fontSize: 16,
+                  color: '#52D7E9',
+                  backgroundColor: 'rgba(0,0,0,.7)',
+                  padding: [4, 6],
+                  borderRadius: 2
+                },
+                areaColor: '#FFCF2D',
+                borderWidth: 2,
+                borderColor: '#FF8D23',
+                shadowColor: 'rgba(0, 0, 0, 0.4)',
+                shadowBlur: 20,
+                shadowOffsetY: 4
+              }
+            },
+            data: []
           }
         ]
       }
@@ -253,13 +302,13 @@ export default {
         let _this = this
         this.chart.on('click', function (params) {
           // 检查是否在允许的区域中
-          if (_this.inArray(_this.ableSpace, params.data.name)) {
+          if (_this.inArray(_this.ableSpace, params.name)) {
             // 检查是否在自动播放
             if (_this.autoPlayTimer !== null) {
               _this.playStop()
             }
             // 激活这块地图
-            _this.selectedMap = params.data.name
+            _this.selectedMap = params.name
           }
         })
         this.activeMap(this.defaultActiveName)
