@@ -3,9 +3,12 @@
     <!-- 标题 -->
     <div class="row title" :style="titleStyle">
       <div class="btnGroup">
+        <div class="logo" :style="logoStyle">
+          <img src="~@/assets/zhdj.png" alt="">
+        </div>
         <div class="btn" @click="togglePlay">{{autoPlay ? '停止播放' : '自动播放'}}</div>
         <div class="btn" @click="$root.toggleFullScreen">{{$root.isFullScreen ? '退出全屏' : '进入全屏'}}</div>
-        <div class="btn">当前分辨率: {{screenWidth}} x {{screenHeight}}</div>
+        <!-- <div class="btn">当前分辨率: {{screenWidth}} x {{screenHeight}}</div> -->
       </div>
       <slot name="title">标题插槽</slot>
     </div>
@@ -113,6 +116,12 @@ export default {
         color: '#31AF8B',
         lineHeight: this.heightTitle + 'px',
         fontSize: '30px'
+      }
+    },
+    logoStyle () {
+      // logo容器的样式
+      return {
+        height: this.heightTitle + 'px'
       }
     },
     screenStyle () {
@@ -227,6 +236,15 @@ export default {
         bottom: 0px;
         font-size: 12px;
         letter-spacing: 2px;
+        .logo{
+          float: left;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img{
+            height: 40px;
+          }
+        }
         .btn{
           float: left;
           margin-left: 10px;
