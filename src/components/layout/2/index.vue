@@ -90,7 +90,8 @@ export default {
     nav: {
       default: () => [
         { label: 'label1', value: 1 },
-        { label: 'label2', value: 2 }
+        { label: 'label2', value: 2 },
+        { label: 'label3', value: 3 }
       ]
     },
     // 数据导航
@@ -293,7 +294,7 @@ export default {
                 border-top-left-radius: 2px;
                 border-bottom-left-radius: 2px;
               }
-              &:nth-child(2){
+              &:nth-child(3){
                 border-top-right-radius: 2px;
                 border-bottom-right-radius: 2px;
               }
