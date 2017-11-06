@@ -46,7 +46,7 @@
         <div :class="[nationMarketIndex === 5 ? 'market-index-btn-active' : 'market-index-btn']" @click="nationMarketIndex = 5">淘汰鸡</div>
       </div>
       <broken-line
-        name="全国行情指数趋势"
+        name="全国价格信息趋势"
         :data="nationMarketIndexTendencyData"
         :ready="layoutReady"
         :size="offsetSize.l2"
@@ -73,7 +73,7 @@
 
     <template slot="r1">
       <zhishu
-        name="河北指数"
+        :name="nowIndex"
         :data="areaIndexData"
         :changeFlagDate="date.id"
         :changeFlagArea="nowProvinceIndex"
@@ -89,7 +89,7 @@
           <div :class="[areaEggTime === 2 ? 'time-active' : 'time']" @click="areaEggTime = 2">年</div>
         </div>
         <broken-line
-          name="河北蛋价指数趋势"
+          :name="nowEggIndex"
           :data="areaIndexTendencyData"
           :ready="layoutReady"
           :size="offsetSize.l2"
@@ -107,7 +107,7 @@
         <div :class="[areaMarketIndex === 5 ? 'market-index-btn-active' : 'market-index-btn']" @click="areaMarketIndex = 5">淘汰鸡</div>
       </div>
       <broken-line
-        name="河北行情指数趋势"
+        :name="nowMarketIndex"
         :data="areaMarketIndexTendencyData"
         :ready="layoutReady"
         :size="offsetSize.l2"
@@ -236,6 +236,18 @@ export default {
     }
   },
   computed: {
+    // 省标题
+    nowIndex () {
+      return `${this.nowProvince}指数`
+    },
+    // 省蛋价标题
+    nowEggIndex () {
+      return `${this.nowProvince}蛋价指数趋势`
+    },
+    // 省价格信息标题
+    nowMarketIndex () {
+      return `${this.nowProvince}价格信息趋势`
+    },
     // 省切换
     nowProvinceIndex () {
       switch (this.nowProvince) {

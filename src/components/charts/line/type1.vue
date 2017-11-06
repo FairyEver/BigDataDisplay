@@ -49,7 +49,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          boundaryGap: false,
+          boundaryGap: true,
           axisLine: {
             lineStyle: {
               color: '#57617B'
@@ -59,8 +59,9 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: '单位（元）',
+          name: '',
           boundaryGap: false,
+          min: 'dataMin',
           axisTick: {
             show: false
           },

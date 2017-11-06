@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="index-point">
-            <div class="index-point-item index-point-item-pd">采集点数量 <span class="index-point-item-span">4556</span></div>
+            <div class="index-point-item index-point-item-pd">采集点数量 <span class="index-point-item-span">202</span></div>
             <div class="index-point-item">
               <div class="index-point-item-pd" @click="chooseDate">时间 
                 <span class="index-point-item-span">{{date.value}}</span>

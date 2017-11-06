@@ -5,7 +5,6 @@
       <div :style="itemStyle" :class="[activeFlag === 0 ? 'item-active' : 'item']" @click="chooseIndex(0)">
         <div class="item-title">蛋价指数</div>
         <div class="item-number" ref="eggCount"></div>
-        <!-- <div class="item-number">{{data[0].index}}</div> -->
         <div class="item-float" :class="[data[0].floatFlag >= 0 ? 'item-float-up' : 'item-float-down']">{{data[0].indexFloat}}</div>
       </div>
       <div :style="itemStyle" class="item2" :class="[activeFlag === 1 ? 'item-active' : 'item']" @click="chooseIndex(1)">
@@ -124,7 +123,8 @@ export default {
       font-weight: bold;
     }
     .item-float {
-      font-size: 12px;
+      padding-top: 5px;
+      font-size: 18px;
       font-weight: bold;
     }
   }
@@ -141,7 +141,9 @@ export default {
       font-weight: bold;
     }
     .item-float {
-      font-size: 12px;
+      padding-top: 5px;
+      font-size: 18px;
+      font-weight: bold;
     }
   }
   .item2 {
