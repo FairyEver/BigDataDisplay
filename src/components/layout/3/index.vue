@@ -3,6 +3,9 @@
     <!-- 标题 -->
     <div class="row title" :style="titleStyle">
       <div class="btnGroup">
+        <div class="logo" :style="logoStyle">
+          <img src="~@/assets/zhdj.png" alt="">
+        </div>
         <div class="btn" @click="togglePlay">{{autoPlay ? '停止播放' : '自动播放'}}</div>
         <div class="btn" @click="$root.toggleFullScreen">{{$root.isFullScreen ? '退出全屏' : '进入全屏'}}</div>
         <div class="btn">当前分辨率: {{screenWidth}} x {{screenHeight}}</div>
@@ -134,6 +137,12 @@ export default {
         fontSize: '30px'
       }
     },
+    logoStyle () {
+      // logo容器的样式
+      return {
+        height: this.heightTitle + 'px'
+      }
+    },
     screenStyle () {
       // 最外层容器的样式
       return {
@@ -253,6 +262,15 @@ export default {
         bottom: 0px;
         font-size: 12px;
         letter-spacing: 2px;
+        .logo{
+          float: left;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img{
+            height: 40px;
+          }
+        }
         .btn{
           float: left;
           margin-left: 10px;
@@ -335,7 +353,7 @@ export default {
           .index-point{
             height: 40px;
             position: absolute;
-            top: 100px;
+            top: 80px;
             left: 0px;
             width: 100%;
             // 让内部元素垂直水平居中
@@ -347,7 +365,7 @@ export default {
             }
             .index-point-item{
               position: relative;
-              font-size: 14px;
+              font-size: 20px;
               margin: 0 5px;
               color: #FFF;
               background-color: #1a1e29;
@@ -356,13 +374,13 @@ export default {
                 top: 100%;
                 left: 0%;
                 width: 100%;
-                padding: 3px 0;
+                padding: 10px 0;
                 background-color: #1a1e29;
                 .choose-time{
                   color: #f4e925;
                   width: 100%;
                   text-align: center;
-                  padding: 3px 0;
+                  padding: 5px 0;
                 }
               }
               .index-point-item-span {
