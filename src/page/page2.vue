@@ -302,9 +302,9 @@ export default {
       // 地图播放了一遍
       console.log('地图播放完了一圈')
       console.log('autoPlay = ' + this.autoPlay)
-      console.log('跳转页面到page1')
+      console.log('跳转页面到page3')
       this.$router.push({
-        name: 'page1',
+        name: 'page3',
         params: {
           autoPlay: true
         }

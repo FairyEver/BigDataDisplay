@@ -342,9 +342,6 @@ export default {
       this.$router.push({
         name: value
       })
-    },
-    nowProvinceIndex (value) {
-      console.log(value)
     }
   },
   mounted () {
@@ -371,9 +368,9 @@ export default {
         this.dataNavActive = 'fen'
         this.autoPlay = true
       } else {
-        console.log('跳转页面到page2')
+        console.log('跳转页面到page1')
         this.$router.push({
-          name: 'page2',
+          name: 'page1',
           params: {
             autoPlay: true
           }
