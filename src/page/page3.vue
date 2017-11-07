@@ -28,7 +28,7 @@
           <div :class="[nationEggTime === 2 ? 'time-active' : 'time']" @click="nationEggTime = 2">年</div>
         </div>
         <broken-line
-          name="全国蛋价指数趋势"
+          :name="nationIndexType"
           :data="nationIndexTendencyData"
           :ready="layoutReady"
           :size="offsetSize.l2"
@@ -236,13 +236,35 @@ export default {
     }
   },
   computed: {
+    // 全国指数类型
+    nationIndexType () {
+      switch (this.nationEggIndex) {
+        case 0:
+          return '全国蛋价指数趋势'
+        case 1:
+          return '全国成本指数趋势'
+        case 2:
+          return '全国盈利指数趋势'
+      }
+    },
+    // 地区指数类型
+    areaIndexType () {
+      switch (this.areaEggIndex) {
+        case 0:
+          return '蛋价'
+        case 1:
+          return '成本'
+        case 2:
+          return '盈利'
+      }
+    },
     // 省标题
     nowIndex () {
       return `${this.nowProvince}指数`
     },
-    // 省蛋价标题
+    // 省指数标题
     nowEggIndex () {
-      return `${this.nowProvince}蛋价指数趋势`
+      return `${this.nowProvince}${this.areaIndexType}指数趋势`
     },
     // 省价格信息标题
     nowMarketIndex () {
