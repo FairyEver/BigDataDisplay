@@ -25,7 +25,7 @@
         <div ref="c1" class="item map">
           <slot name="c1"></slot>
           <!-- 顶部的导航 -->
-          <div class="nav">
+          <!-- <div class="nav">
             <div
               v-for="item in nav"
               :key="item.value"
@@ -34,7 +34,7 @@
               @click="navClick(item.value)">
               {{item.label}}
             </div>
-          </div>
+          </div> -->
           <div v-if="dataNav.length > 0" class="dataNav">
             <div
               v-for="item in dataNav"
