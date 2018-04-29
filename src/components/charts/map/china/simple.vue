@@ -48,7 +48,7 @@ export default {
         title: {
           text: '全国数据',
           x: 'center',
-          top: 60,
+          top: 20,
           textStyle: {
             color: '#FEE032',
             fontSize: 24
@@ -226,8 +226,11 @@ export default {
     playCount () {
       // 自动播放的每一步
       if (this.activeCount >= this.ableSpace.length) {
-        this.playStop()
-        this.$emit('playRound')
+        // this.playStop()
+        // this.$emit('playRound')
+        this.activeCount = 0
+        this.selectedMap = this.ableSpace[this.activeCount]
+        this.activeCount += 1
       } else {
         // 更新激活的区域
         // 在所有的数据中循环
